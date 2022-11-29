@@ -1,0 +1,30 @@
+#admin-panel {
+  display: flex;
+  min-height: 100vh;
+  height: 100%;
+  background-color: #e9ecef;
+}
+#admin-panel #menu {
+  width: 300px;
+  padding: 2rem;
+}
+#admin-panel #menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#admin-panel #menu ul li {
+  padding: 1rem 0;
+  font-size: 1.25rem;
+}
+#admin-panel #menu ul a {
+  color: #212529;
+}
+#admin-panel #content {
+  flex: auto;
+  padding: 2rem;
+  background-color: #ffffff;
+}
+#admin-panel #content .page-title {
+  margin-bottom: 1.5rem;
+}/*# sourceMappingURL=adminStyle.css.map */

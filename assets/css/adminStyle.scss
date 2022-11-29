@@ -1,0 +1,37 @@
+#admin-panel {
+    display: flex;
+    min-height: 100vh;
+    height: 100%;
+    background-color: #e9ecef;
+    
+    #menu {
+      width: 300px;
+      padding: 2rem;
+      
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        
+        li {
+          padding: 1rem 0;   
+          font-size: 1.25rem;
+        }
+        a {
+          color: #212529;
+        }
+      }
+    }
+    #content {
+      flex: auto;
+      padding: 2rem;
+      background-color: #ffffff;
+      
+      .page-title {
+        margin-bottom: 1.5rem;
+      }
+    }
+  }
+
+
+  
