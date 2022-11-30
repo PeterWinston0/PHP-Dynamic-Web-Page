@@ -154,7 +154,7 @@ $(document).ready(function() {
         slidesToShow: 4,
         slidesToScroll: 3,
         appendArrows: $(".product-carousel"),
-        dots: true,
+        dots: false,
         responsive: [{
                 breakpoint: 1024,
                 settings: {

@@ -1,11 +1,10 @@
 <?php
 session_start();
 $title = "Checkout Page";
-require "../includes/layout/frontHeader.php";
+require_once('../includes/config.php');
+require_once('../includes/helpers.php');
 
 $cartItemCount = count($_SESSION['cart_items']);
-
-//pre($_SESSION);
 
 if (isset($_POST['submit'])) {
   if (isset($_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['address'], $_POST['zipcode']) && !empty($_POST['first_name']) && !empty($_POST['last_name']) && !empty($_POST['email']) && !empty($_POST['address']) && !empty($_POST['zipcode'])) {
@@ -43,11 +42,12 @@ if (isset($_POST['submit'])) {
         $getOrderID = $db->lastInsertId();
 
         if (isset($_SESSION['cart_items']) || !empty($_SESSION['cart_items'])) {
-          $sqlDetails = 'insert into order_details (order_id, product_id, product_name, product_price, qty, total_price) values(:order_id,:product_id,:product_name,:product_price,:qty,:total_price)';
+          $sqlDetails = 'INSERT IGNORE INTO order_details (order_id, product_id, product_name, product_price, qty, total_price) values(:order_id, :product_id, :product_name, :product_price, :qty,:total_price)';
           $orderDetailStmt = $db->prepare($sqlDetails);
 
           $totalPrice = 0;
           foreach ($_SESSION['cart_items'] as $item) {
+
             $totalPrice += $item['total_price'];
 
             $paramOrderDetails = [
@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
             $orderDetailStmt->execute($paramOrderDetails);
           }
 
-          $updateSql = 'update orders set total_price = :total where id = :id';
+          $updateSql = 'UPDATE orders SET total_price = :total WHERE o_id = :id';
 
           $rs = $db->prepare($updateSql);
           $prepareUpdate = [
@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
 
           $rs->execute($prepareUpdate);
 
-          unset($_SESSION['cart_items']);
+          //unset($_SESSION['cart_items']);
           $_SESSION['confirm_order'] = true;
           header('location:thank-you.php');
           exit();
@@ -121,6 +121,8 @@ if (isset($_POST['submit'])) {
 
   }
 }
+
+require "../includes/layout/frontHeader.php";
 ?>
 <div class="page-container">
     <div class="row checkout-container">
@@ -224,6 +226,7 @@ if (isset($_POST['submit'])) {
                               value="">
                       </div>
                   </div>
+                  <hr class="mb-4">
                 </div>
 
                 <script type="text/javascript">
@@ -236,7 +239,6 @@ if (isset($_POST['submit'])) {
                         });
                     });
                 </script>
-                <hr class="mb-4">
                 <div class="checkout-submit">
                 <button class="place-order-btn" type="submit" name="submit" value="submit">Place Order</button>
                 <p>By clicking PLACE ORDER you agree to DreamSneaker's <br>
@@ -288,6 +290,7 @@ if (isset($_POST['submit'])) {
                 <strong>
                     <p>Total</p>
                     <p>DKK <?php echo $totalCounter;?> ,-</p>
+                    <!-- <?php echo $item['total_price'] ?> -->
                 </strong>
             </div>
             <?php }?>

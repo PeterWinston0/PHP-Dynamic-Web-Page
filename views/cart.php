@@ -1,7 +1,9 @@
 <?php 
 session_start();
 $title = "Cart Page";
-require "../includes/layout/frontHeader.php";
+
+
+//pre($_SESSION);
 
 if(isset($_GET['action'],$_GET['item']) && $_GET['action'] == 'remove')
 {
@@ -10,6 +12,7 @@ if(isset($_GET['action'],$_GET['item']) && $_GET['action'] == 'remove')
     exit();
 }
 
+require "../includes/layout/frontHeader.php";
 ?>
 <div class="page-container">
     <div class="page-title">
@@ -45,8 +48,8 @@ if(isset($_GET['action'],$_GET['item']) && $_GET['action'] == 'remove')
                       $imgUrl = PRODUCT_IMG_URL.$item['product_img'];   
                     
                     $total = $item['product_price'] * $item['qty'];
-                    $totalCounter+= $total;
-                    $itemCounter+=$item['qty'];
+                    $totalCounter += $total;
+                    $itemCounter += $item['qty'];
                     ?>
                     <tr>
                         <td>
@@ -54,7 +57,7 @@ if(isset($_GET['action'],$_GET['item']) && $_GET['action'] == 'remove')
                                 style="width:60px;"><?php echo $item['product_name'];?>
 
                             <a href="cart.php?action=remove&item=<?php echo $key?>" class="text-danger">
-                                <i class="bi bi-trash-fill"></i>
+                                <i class="fas fa-trash" style="font-size: 12px; color: red; padding-left: 5px;"></i>
                             </a>
 
                         </td>
