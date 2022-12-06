@@ -8,7 +8,6 @@ require_once "../controller/ProductsController.php";
 require_once "../controller/BrandController.php";
 require_once "../controller/CategoryController.php";
 
-
 $dbCon = dbCon($user, $pass);
 $query = $dbCon->prepare("SELECT * FROM product, product_categories WHERE fk_product = product.id AND fk_category = 5");
 $query->execute();
@@ -41,22 +40,11 @@ $getSlides = $query->fetchAll();
 </head>
 
 <div class="container">
-
     <?php
     foreach ($getSlides as $slides) {
     ?>
-
-
     <div class="arrow arrow-left"><i class="fas fa-chevron-circle-left"></i></div>
     <img src="../crud/company/img/<?= $slides['image'] ?>" alt="">
-
-    <?php
-    }
-
-    ?>
-
-    <div class="arrow arrow-right"><i class="fas fa-chevron-circle-right"></i>
-    </div>
     <div class="dots">
         <div class="dot">
             <i class="far fa-dot-circle"></i>
@@ -68,6 +56,10 @@ $getSlides = $query->fetchAll();
             <i class="far fa-circle"></i>
         </div>
     </div>
+    <?php
+    }
+    ?>
+    <div class="arrow arrow-right"><i class="fas fa-chevron-circle-right"></i></div>
 </div>
 
 <script>
@@ -112,11 +104,11 @@ startAutoSlide(); // Start the slideshow
 </script>
 
 <div class="block">
-    <h2 class="myHead">Popular Sneakers</h2>
+    <h2 class="myHead">Latest Drops</h2>
     <div class="carousel">
         <div class="">
             <button type="button" class="slick-prev">Previous</button>
-            <div class="product-carousel">
+            <div class="product-carousel car1">
                 <?php
                 $products = new ProductsController;
                 $result = $products->index();
@@ -131,7 +123,6 @@ startAutoSlide(); // Start the slideshow
                         </p>
                         <p>DKK <?= $row['price'] ?>
                         </p>
-                        <!-- <button>Add to cart</button> -->
                     </div>
                 </a>
                 <?php
@@ -146,14 +137,11 @@ startAutoSlide(); // Start the slideshow
 
 <script>
 $(document).ready(function() {
-    $(".row-eq").each(function() {
-        equalColHeights($(this));
-    });
-    $(".product-carousel").slick({
+    $(".car1").slick({
         infinite: false,
         slidesToShow: 4,
         slidesToScroll: 3,
-        appendArrows: $(".product-carousel"),
+        appendArrows: $(".car1"),
         dots: false,
         responsive: [{
                 breakpoint: 1024,
@@ -179,33 +167,72 @@ $(document).ready(function() {
         ],
     });
 });
+</script>
 
-window.onresize = function() {
-    $(".row-eq").each(function() {
-        equalColHeights($(this));
+<div class="block">
+    <h2 class="myHead">Popular Sneakers</h2>
+    <div class="carousel">
+        <div class="">
+            <button type="button" class="slick-prev">Previous</button>
+            <div class="product-carousel car2">
+                <?php
+                $products = new ProductsController;
+                $result = $products->index();
+                if ($result) {
+                    foreach ($result as $row) {
+                ?>
+                <a class="myLink" href="single-product.php?product=<?php echo $row['id'] ?>">
+                    <div class="carousel-item">
+                        <img src="../crud/products/img/<?= $row['image'] ?>" style="width: 100%"></img>
+                        <p>
+                            <?= $row['title'] ?>
+                        </p>
+                        <p>DKK <?= $row['price'] ?>
+                        </p>
+                    </div>
+                </a>
+                <?php
+                    }
+                }
+                ?>
+                <button type="button" class="slick-next">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $(".car2").slick({
+        infinite: false,
+        slidesToShow: 4,
+        slidesToScroll: 3,
+        appendArrows: $(".car2"),
+        dots: false,
+        responsive: [{
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 3,
+                },
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
+            },
+        ],
     });
-};
-
-const accordion = document.getElementsByClassName("container");
-
-for (i = 0; i < accordion.length; i++) {
-    accordion[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-    });
-}
-
-function equalColHeights(ele) {
-    var highestCol = 0;
-    $(ele)
-        .children(".col")
-        .each(function() {
-            $(this).css("height", "auto");
-            if (highestCol < $(this).height()) {
-                highestCol = $(this).height();
-            }
-            $(ele).children(".col").height(highestCol);
-        });
-}
+});
 </script>
 
 <div class="page-container">
@@ -215,11 +242,12 @@ function equalColHeights(ele) {
         ?>
         <div>
             <a href="products.php?cat_id=<?= $gender['cat_id'] ?>">
-                <img src='../crud/category/img/<?= $gender['image'] ?>' alt='images'>
-                <div class="overlay"></div>
-                <p>
-                    <?= $gender['title'] ?>
-                </p>
+                <figure class="textover">
+                    <img src='../crud/category/img/<?= $gender['image'] ?>' alt='images'>
+                    <figcaption>
+                        <?= $gender['title'] ?>
+                    </figcaption>
+                </figure>
             </a>
         </div>
         <?php
@@ -228,66 +256,75 @@ function equalColHeights(ele) {
     </div>
 </div>
 
-<h2 class="myHead">Daily Special Offer</h2>
-<div class="block special-offer" style="">
-    <?php
-        foreach ($getSpecialProd as $specialProd) {
-        ?>
-    <div class="product">
-        <a class="myLink" href="single-product.php?product=<?php echo $specialProd['id'] ?>">
+<div class="page-container">
+    <div class="block special-offer">
+        <?php
+    foreach ($getSpecialProd as $specialProd) {
+    ?>
+        <!-- <a class="myLink" href="single-product.php?product=<?php echo $specialProd['id'] ?>"></a> -->
+        <div class="page-head">
+            <h3>UGENS SNEAKER / <?= $specialProd['title'] ?>
+            </h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi
+                repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto
+                fuga praesentium optio, eaque rerum!</p>
+        </div>
+        <div class="image">
             <img class="" src="../crud/products/img/<?= $specialProd['image'] ?>" alt="Card image cap">
-            <div class="body">
-                <h5 class="title">
-                    <?= $specialProd['title'] ?>
-                </h5>
-                <p class="text">
-                    DKK <?= $specialProd['price'] ?>,-
-                </p>
-                <!-- <p class="text">
-                    <?= $specialProd['description'] ?>
-                </p> -->
-            </div>
-        </a>
+        </div>
+        <div class="text">
+            <h2>
+                <?= $specialProd['title'] ?>
+            </h2>
+            <h3>DKK <?= $specialProd['price'] ?>,-</h3>
+            <p>
+                <?= $specialProd['description'] ?>
+            </p>
+        </div>
+        <?php
+    }
+    ?>
     </div>
-    <?php
-        }
-        ?>
 </div>
 
-<div class="block">
+<!-- <div class="block">
     <h2 class="myHead">Our Brands</h2>
     <div class="slider">
         <div class="slide-track">
             <?php
-    $brand = new BrandController;
-    $result = $brand->index();
-    if ($result) {
-        foreach ($result as $row) {
-    ?>
+            $brand = new BrandController;
+            $result = $brand->view();
+            if ($result) {
+                foreach ($result as $row) {
+            ?>
             <div class="slide">
                 <img src="../crud/brand/img/<?= $row['image'] ?>" height="100" width="250" alt="" />
 
             </div>
             <?php
-        }
-    }
-        ?>
+                }
+            }
+            ?>
         </div>
     </div>
-</div>
+</div> -->
+
+
 
 <div class="page-container">
     <div class="limited-sale">
         <?php
         foreach ($limitedSale as $special) {
         ?>
+
         <div>
             <a href="products.php?cat_id=<?= $special['cat_id'] ?>">
-                <img src='../crud/category/img/<?= $special['image'] ?>' alt='images'>
-
-                <p>
-                    <?= $special['title'] ?>
-                </p>
+                <figure class="textover">
+                    <img src='../crud/category/img/<?= $special['image'] ?>' alt='images'>
+                    <figcaption>
+                        <?= $special['title'] ?>
+                    </figcaption>
+                </figure>
             </a>
         </div>
         <?php
@@ -301,8 +338,8 @@ function equalColHeights(ele) {
     <section class="section-about">
         <div class="page-container">
             <?php
-        foreach ($getCompanyInfo as $companyInfo) {
-        ?>
+            foreach ($getCompanyInfo as $companyInfo) {
+            ?>
             <div class="about">
                 <div class="image">
                     <img class="" src="../crud/company/img/<?= $companyInfo['image'] ?>" alt="Card image cap">
@@ -317,12 +354,13 @@ function equalColHeights(ele) {
                 </div>
             </div>
             <?php
-        }
-        ?>
+            }
+            ?>
         </div>
     </section>
 </div>
 
+<!-- NEWS -->
 <div class="page-container">
     <div class="row news">
         <h2 class="myHead">Check out our blog for the latest news</h2>
@@ -358,11 +396,44 @@ function equalColHeights(ele) {
             }
         }
         ?>
-        <a class="more-btn" href="#">Look some more</a>
+    </div>
+    <div class="more-wrap">
+        <a class="more-btn" href="blog.php">Look some more</a>
     </div>
 </div>
 
+<script>
+$(document).ready(function() {
+            $(".row-eq").each(function() {
+                equalColHeights($(this));
+            });
+            window.onresize = function() {
+                $(".row-eq").each(function() {
+                    equalColHeights($(this));
+                });
+            };
 
+            const accordion = document.getElementsByClassName("container");
 
+            for (i = 0; i < accordion.length; i++) {
+                accordion[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                });
+            }
+
+            function equalColHeights(ele) {
+                var highestCol = 0;
+                $(ele)
+                    .children(".col")
+                    .each(function() {
+                        $(this).css("height", "auto");
+                        if (highestCol < $(this).height()) {
+                            highestCol = $(this).height();
+                        }
+                        $(ele).children(".col").height(highestCol);
+                    });
+            }
+        }
+</script>
 
 <?php require("../includes/layout/frontFooter.php") ?>

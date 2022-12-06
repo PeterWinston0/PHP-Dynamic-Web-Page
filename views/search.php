@@ -5,7 +5,9 @@
 ?>
 
 <div class="page-container">
-	<h2>Search Results</h2>
+<div class="page-title">
+        <h1>Search Results</h1>
+    </div>
 <div class="product-container" style="">
 			<?php
 				$keyword = $_POST['keyword'];

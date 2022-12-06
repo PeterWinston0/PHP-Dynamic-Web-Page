@@ -42,13 +42,13 @@ if (isset($_POST['submit'])) {
         $getOrderID = $db->lastInsertId();
 
         if (isset($_SESSION['cart_items']) || !empty($_SESSION['cart_items'])) {
-          $sqlDetails = 'INSERT IGNORE INTO order_details (order_id, product_id, product_name, product_price, qty, total_price) values(:order_id, :product_id, :product_name, :product_price, :qty,:total_price)';
+          $sqlDetails = 'INSERT IGNORE INTO order_details (order_id, product_id, product_name, product_price, qty, total_price) values(:order_id, :product_id, :product_name, :product_price, :qty, :total_price)';
           $orderDetailStmt = $db->prepare($sqlDetails);
 
-          $totalPrice = 0;
+          $totalPriceOrder = 0;
           foreach ($_SESSION['cart_items'] as $item) {
 
-            $totalPrice += $item['total_price'];
+            $totalPriceÎtem = $item['product_price'] * $item['qty'];
 
             $paramOrderDetails = [
               'order_id' => $getOrderID,
@@ -56,8 +56,10 @@ if (isset($_POST['submit'])) {
               'product_name' => $item['product_name'],
               'product_price' => $item['product_price'],
               'qty' => $item['qty'],
-              'total_price' => $item['total_price']
+              'total_price' => $totalPriceÎtem
             ];
+
+            $totalPriceOrder += $totalPriceÎtem;
 
             $orderDetailStmt->execute($paramOrderDetails);
           }
@@ -66,7 +68,7 @@ if (isset($_POST['submit'])) {
 
           $rs = $db->prepare($updateSql);
           $prepareUpdate = [
-            'total' => $totalPrice,
+            'total' => $totalPriceOrder,
             'id' => $getOrderID
           ];
 

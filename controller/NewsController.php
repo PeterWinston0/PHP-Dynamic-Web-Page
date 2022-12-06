@@ -10,7 +10,7 @@ class NewsController
 
     public function index()
     {
-        $newsQuery = "SELECT * FROM news";
+        $newsQuery = "SELECT * FROM news ORDER BY id DESC LIMIT 3";
         $result = $this->conn->query($newsQuery);
         if($result->num_rows > 0){
             return $result; 

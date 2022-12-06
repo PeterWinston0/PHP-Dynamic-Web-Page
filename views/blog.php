@@ -5,7 +5,7 @@ require "../includes/layout/frontHeader.php";
 
 require_once "../controller/NewsController.php";
 ?>
-
+<div class="page-container">
 <div class="row news">
 <h2 class="myHead">News</h2>
     <?php
@@ -40,6 +40,7 @@ require_once "../controller/NewsController.php";
             }
         }
         ?>
+</div>
 </div>
 
 <?php require "../includes/layout/frontFooter.php";?>

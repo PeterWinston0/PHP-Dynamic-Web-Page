@@ -28,13 +28,28 @@ require_once "../controller/CategoryController.php";
 </head>
 
 <body>
+    
     <nav class="nav-container">
-        <h1><a style="text-decoration:none; color:white;" href="index.php">Sneaker Dreams</a></h1>
-        <button id="navbar-button">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+        <h1><a href="index.php">Sneaker Dreams</a></h1>
+        <div class="nav-btn">
+            <a href="#" class="slide-toggle" style="color:#ffffff;">
+                <i class="fas fa-search""></i>
+            </a>
+
+            <a href="cart.php" style="color:#ffffff;">
+                <i class="fa fa-shopping-cart" "></i>
+                <?php
+                    echo (isset($_SESSION['cart_items']) && count($_SESSION['cart_items'])) > 0 ? count($_SESSION['cart_items']) : '';
+                    ?>
+            </a>
+
+            <button id="navbar-button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
         <ul>
             <li><a href="index.php">Home</a></li>
             <?php
@@ -54,12 +69,12 @@ require_once "../controller/CategoryController.php";
             <li><a href="contact.php">Contact</a></li>
         </ul>
         <ul class="nav-icons">
-        <li><a class="slide-toggle" id="show" href="#" style="color:#ffffff;">
-                    <i class="fas fa-search" style="font-size:20px; color: white;"></i>
+            <li><a class="slide-toggle" id="show" href="#" style="color:#ffffff;">
+                    <i class="fas fa-search"></i>
                 </a>
             </li>
             <li><a href="cart.php" style="color:#ffffff">
-                    <i class="fa fa-shopping-cart" style="font-size:20px; color: white;"></i>
+                    <i class="fa fa-shopping-cart"></i>
                     <?php
                     echo (isset($_SESSION['cart_items']) && count($_SESSION['cart_items'])) > 0 ? count($_SESSION['cart_items']) : '';
                     ?>
@@ -67,24 +82,25 @@ require_once "../controller/CategoryController.php";
             </li>
         </ul>
     </nav>
+        
     <ul class="responsive-nav">
-    <li><a href="index.php">Home</a></li>
-            <?php
+        <li><a href="index.php">Home</a></li>
+        <?php
             $category = new CategoryController;
             $result = $category->index();
             if ($result) {
                 foreach ($result as $row) {
             ?>
-            <li><a class="nav-link" href="products.php?cat_id=<?= $row['cat_id'] ?>">
-                    <?= $row['title'] ?>
-                </a></li>
-            <?php
+        <li><a class="nav-link" href="products.php?cat_id=<?= $row['cat_id'] ?>">
+                <?= $row['title'] ?>
+            </a></li>
+        <?php
                 }
             }
             ?>
-            <li><a href="blog.php">Blog</a></li>
-            <li><a href="contact.php">Contact</a></li>
-            <li><a href="#" style="color:#ffffff;">
+        <li><a href="blog.php">Blog</a></li>
+        <li><a href="contact.php">Contact</a></li>
+        <!-- <li><a href="#" style="color:#ffffff;">
                     <i class="fas fa-search" style="font-size:20px; color: black;"></i>
                 </a>
             </li>
@@ -94,29 +110,28 @@ require_once "../controller/CategoryController.php";
                     echo (isset($_SESSION['cart_items']) && count($_SESSION['cart_items'])) > 0 ? count($_SESSION['cart_items']) : '';
                     ?>
                 </a>
-            </li>
+            </li> -->
     </ul>
 
     <script>
-        let navbarButton = document.querySelector("#navbar-button");
-        let responsiveNav = document.querySelector('.responsive-nav');
+    let navbarButton = document.querySelector("#navbar-button");
+    let responsiveNav = document.querySelector('.responsive-nav');
 
-        navbarButton.addEventListener('click', e => {
-            responsiveNav.classList.toggle('responsive-nav-active')
-        });
+    navbarButton.addEventListener('click', e => {
+        responsiveNav.classList.toggle('responsive-nav-active')
+    });
     </script>
 
     <div class="search-container">
         <form method="POST" action="../views/search.php">
-				<div class="search-area">
-					<input type="text" class="search-txt" name="keyword" placeholder="Search here..." required="required"/>
-					<button class="search-btn" name="search"><i class="fa fa-search"></i></button>
-				</div>
-		</form>
+            <div class="search-area">
+                <input type="text" class="search-txt" name="keyword" placeholder="Search here..." required="required" />
+                <button class="search-btn" name="search"><i class="fa fa-search"></i></button>
+            </div>
+        </form>
     </div>
 
     <script>
-
     // $(document).ready(function(){
     //     $(".search-container").hide();
     // $(".slide-toggle").click(function(){
@@ -133,14 +148,14 @@ require_once "../controller/CategoryController.php";
     //         $(".search-container").show();
     //     });
     // });
-    
 
 
-        //SLIDE DOWN AND UP TOGGLE
-        $(document).ready(function(){
-            $(".search-container").hide();
-                $(".slide-toggle").click(function(){
-                    $(".search-container").slideToggle();
-                });
-            });
+
+    //SLIDE DOWN AND UP TOGGLE
+    $(document).ready(function() {
+        $(".search-container").hide();
+        $(".slide-toggle").click(function() {
+            $(".search-container").slideToggle();
+        });
+    });
     </script>

@@ -8,7 +8,9 @@ class BrandController
         $this->conn = $db->conn;
     }
 
-    public function index()
+    
+
+    public function view()
     {
         $brandQuery = "SELECT * FROM brand";
         $result = $this->conn->query($brandQuery);

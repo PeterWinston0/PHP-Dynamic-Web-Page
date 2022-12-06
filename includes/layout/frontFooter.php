@@ -5,6 +5,16 @@ $query->execute();
 $getComHours = $query->fetchAll();
 ?>
 
+<div class="newsletter">
+    <div class="newsletter-wrap">
+    <p>Subscribe to out newsletter to follow up on the latest trends and out newest products</p>
+    <div>
+        <input class="newsletter-txt" placeholder="E-mail" type="text">
+        <input class="newsletter-btn" type="button" value="Subscribe">
+    </div>
+    </div>
+</div>
+
 <footer>
     <div class="foot-wrap">
         <div class="foot-head">

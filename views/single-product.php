@@ -94,7 +94,7 @@ if(isset($_GET['product']) && !empty($_GET['product']) && is_numeric($_GET['prod
     require "../includes/layout/frontHeader.php";
 
 ?>
-<div class="page-container">
+<div class="page-container" style="background-color: white;">
     <?php if(isset($getProductData) && is_array($getProductData)){?>
         <?php if(isset($successMsg) && $successMsg == true){?>
             <div class="">

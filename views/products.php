@@ -3,10 +3,6 @@ session_start();
 $title = "Products Page";
 require "../includes/layout/frontHeader.php";
 
-//$cat_id = (int) $_GET['cat_id'];
-//$brand_id = (int) $_GET['brand_id'];
-//var_dump($cat_id);
-
 $dbCon = dbCon($user, $pass);
 if ($_GET['cat_id']) {
     $cat_id = (int) $_GET['cat_id'];
@@ -30,8 +26,6 @@ if ($_GET['cat_id']) {
     $query->execute();
     $getAllCat = $query->fetchAll();
 }
-
-
 ?>
 <div class="page-container">
     <?php
