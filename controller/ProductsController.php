@@ -18,5 +18,27 @@ class ProductsController
             return false;
         }
     }
+
+    public function latestProduct()
+    {
+        $productsQuery = "SELECT * FROM latestProducts";
+        $result = $this->conn->query($productsQuery);
+        if($result->num_rows > 0){
+            return $result; 
+        }else{
+            return false;
+        }
+    }
+
+    public function specialProduct()
+    {
+        $productsQuery = "SELECT * FROM product, product_categories WHERE fk_product = product.id AND fk_category = 5";
+        $result = $this->conn->query($productsQuery);
+        if($result->num_rows > 0){
+            return $result; 
+        }else{
+            return false;
+        }
+    }
 }
 ?>

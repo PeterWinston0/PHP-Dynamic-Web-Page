@@ -1,5 +1,4 @@
 <?php
-
 define('DB_HOST', 'localhost');
 define('DB_USER', 'peter');
 define('DB_PASSWORD', '1234');

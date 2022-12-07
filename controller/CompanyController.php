@@ -1,7 +1,7 @@
 <?php
-//require_once("../db/dbconn.php");
+require_once("../db/dbconn.php");
 
-class NewsController
+class CompanyController
 {
     public function __construct()
     {
@@ -9,10 +9,10 @@ class NewsController
         $this->conn = $db->conn;
     }
 
-    public function frontNews()
+    public function frontSlides()
     {
-        $newsQuery = "SELECT * FROM news ORDER BY id DESC LIMIT 3";
-        $result = $this->conn->query($newsQuery);
+        $companyQuery = "SELECT * FROM carousel";
+        $result = $this->conn->query($companyQuery);
         if ($result->num_rows > 0) {
             return $result;
         } else {
@@ -20,10 +20,10 @@ class NewsController
         }
     }
 
-    public function allNews()
+    public function companyInfo()
     {
-        $newsQuery = "SELECT * FROM news ORDER BY id DESC";
-        $result = $this->conn->query($newsQuery);
+        $companyQuery = "SELECT * FROM company";
+        $result = $this->conn->query($companyQuery);
         if ($result->num_rows > 0) {
             return $result;
         } else {
@@ -31,4 +31,3 @@ class NewsController
         }
     }
 }
-?>

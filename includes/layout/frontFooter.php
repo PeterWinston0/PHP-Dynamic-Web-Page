@@ -1,4 +1,6 @@
 <?php
+require_once("../db/dbcon.php");
+
 $dbCon = dbCon($user, $pass);
 $query = $dbCon->prepare("SELECT * FROM company_hours");
 $query->execute();

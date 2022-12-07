@@ -7,44 +7,18 @@ require_once "../controller/NewsController.php";
 require_once "../controller/ProductsController.php";
 require_once "../controller/BrandController.php";
 require_once "../controller/CategoryController.php";
-
-$dbCon = dbCon($user, $pass);
-$query = $dbCon->prepare("SELECT * FROM product, product_categories WHERE fk_product = product.id AND fk_category = 5");
-$query->execute();
-$getSpecialProd = $query->fetchAll();
-
-$query = $dbCon->prepare("SELECT * FROM category ORDER BY no_order ASC LIMIT 2");
-$query->execute();
-$genderCat = $query->fetchAll();
-
-$query = $dbCon->prepare("SELECT * FROM category ORDER BY no_order ASC LIMIT 2,2");
-$query->execute();
-$limitedSale = $query->fetchAll();
-
-$query = $dbCon->prepare("SELECT * FROM company");
-$query->execute();
-$getCompanyInfo = $query->fetchAll();
-
-$query = $dbCon->prepare("SELECT * FROM carousel");
-$query->execute();
-$getSlides = $query->fetchAll();
+require_once "../controller/CompanyController.php";
 ?>
-
-<head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js"></script>
-
-</head>
 
 <div class="container">
     <?php
-    foreach ($getSlides as $slides) {
+    $company = new CompanyController;
+    $result = $company->frontSlides();
+    if ($result) {
+        foreach ($result as $row) {
     ?>
     <div class="arrow arrow-left"><i class="fas fa-chevron-circle-left"></i></div>
-    <img src="../crud/company/img/<?= $slides['image'] ?>" alt="">
+    <img src="../crud/company/img/<?= $row['image'] ?>" alt="">
     <div class="dots">
         <div class="dot">
             <i class="far fa-dot-circle"></i>
@@ -57,51 +31,11 @@ $getSlides = $query->fetchAll();
         </div>
     </div>
     <?php
+        }
     }
     ?>
     <div class="arrow arrow-right"><i class="fas fa-chevron-circle-right"></i></div>
 </div>
-
-<script>
-const imgs = document.querySelectorAll(".container img");
-const dots = document.querySelectorAll(".dot i");
-const leftArrow = document.querySelector(".arrow-left");
-const rightArrow = document.querySelector(".arrow-right");
-
-let currentIndex = 0;
-let time = 5000; // default time for auto slideshow
-
-const defClass = (startPos, index) => {
-    for (let i = startPos; i < imgs.length; i++) {
-        imgs[i].style.display = "none";
-        dots[i].classList.remove("fa-dot-circle");
-        dots[i].classList.add("fa-circle");
-    }
-    imgs[index].style.display = "block";
-    dots[index].classList.add("fa-dot-circle");
-};
-
-defClass(1, 0);
-
-leftArrow.addEventListener("click", function() {
-    currentIndex <= 0 ? currentIndex = imgs.length - 1 : currentIndex--;
-    defClass(0, currentIndex);
-});
-
-rightArrow.addEventListener("click", function() {
-    currentIndex >= imgs.length - 1 ? currentIndex = 0 : currentIndex++;
-    defClass(0, currentIndex);
-});
-
-const startAutoSlide = () => {
-    setInterval(() => {
-        currentIndex >= imgs.length - 1 ? currentIndex = 0 : currentIndex++;
-        defClass(0, currentIndex);
-    }, time);
-};
-
-startAutoSlide(); // Start the slideshow
-</script>
 
 <div class="block">
     <h2 class="myHead">Latest Drops</h2>
@@ -111,7 +45,7 @@ startAutoSlide(); // Start the slideshow
             <div class="product-carousel car1">
                 <?php
                 $products = new ProductsController;
-                $result = $products->index();
+                $result = $products->latestProduct();
                 if ($result) {
                     foreach ($result as $row) {
                 ?>
@@ -134,40 +68,6 @@ startAutoSlide(); // Start the slideshow
         </div>
     </div>
 </div>
-
-<script>
-$(document).ready(function() {
-    $(".car1").slick({
-        infinite: false,
-        slidesToShow: 4,
-        slidesToScroll: 3,
-        appendArrows: $(".car1"),
-        dots: false,
-        responsive: [{
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 3,
-                },
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
-    });
-});
-</script>
 
 <div class="block">
     <h2 class="myHead">Popular Sneakers</h2>
@@ -201,56 +101,26 @@ $(document).ready(function() {
     </div>
 </div>
 
-<script>
-$(document).ready(function() {
-    $(".car2").slick({
-        infinite: false,
-        slidesToShow: 4,
-        slidesToScroll: 3,
-        appendArrows: $(".car2"),
-        dots: false,
-        responsive: [{
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 3,
-                },
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
-    });
-});
-</script>
-
 <div class="page-container">
     <div class="gender-cat">
         <?php
-        foreach ($genderCat as $gender) {
+        $category = new CategoryController;
+        $result = $category->genderCat();
+        if ($result) {
+            foreach ($result as $row) {
         ?>
         <div>
-            <a href="products.php?cat_id=<?= $gender['cat_id'] ?>">
+            <a href="products.php?cat_id=<?= $row['cat_id'] ?>">
                 <figure class="textover">
-                    <img src='../crud/category/img/<?= $gender['image'] ?>' alt='images'>
+                    <img src='../crud/category/img/<?= $row['image'] ?>' alt='images'>
                     <figcaption>
-                        <?= $gender['title'] ?>
+                        <?= $row['title'] ?>
                     </figcaption>
                 </figure>
             </a>
         </div>
         <?php
+            }
         }
         ?>
     </div>
@@ -259,31 +129,35 @@ $(document).ready(function() {
 <div class="page-container">
     <div class="block special-offer">
         <?php
-    foreach ($getSpecialProd as $specialProd) {
-    ?>
-        <!-- <a class="myLink" href="single-product.php?product=<?php echo $specialProd['id'] ?>"></a> -->
+        $products = new ProductsController;
+        $result = $products->specialProduct();
+        if ($result) {
+            foreach ($result as $row) {
+        ?>
+        <!-- <a class="myLink" href="single-product.php?product=<?php echo $row['id'] ?>"></a> -->
         <div class="page-head">
-            <h3>UGENS SNEAKER / <?= $specialProd['title'] ?>
+            <h3>UGENS SNEAKER / <?= $row['title'] ?>
             </h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi
                 repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto
                 fuga praesentium optio, eaque rerum!</p>
         </div>
         <div class="image">
-            <img class="" src="../crud/products/img/<?= $specialProd['image'] ?>" alt="Card image cap">
+            <img class="" src="../crud/products/img/<?= $row['image'] ?>" alt="Card image cap">
         </div>
         <div class="text">
             <h2>
-                <?= $specialProd['title'] ?>
+                <?= $row['title'] ?>
             </h2>
-            <h3>DKK <?= $specialProd['price'] ?>,-</h3>
+            <h3>DKK <?= $row['price'] ?>,-</h3>
             <p>
-                <?= $specialProd['description'] ?>
+                <?= $row['description'] ?>
             </p>
         </div>
         <?php
-    }
-    ?>
+            }
+        }
+        ?>
     </div>
 </div>
 
@@ -309,25 +183,27 @@ $(document).ready(function() {
     </div>
 </div> -->
 
-
-
 <div class="page-container">
     <div class="limited-sale">
         <?php
-        foreach ($limitedSale as $special) {
+        $category = new CategoryController;
+        $result = $category->specialCat();
+        if ($result) {
+            foreach ($result as $row) {
         ?>
 
         <div>
-            <a href="products.php?cat_id=<?= $special['cat_id'] ?>">
+            <a href="products.php?cat_id=<?= $row['cat_id'] ?>">
                 <figure class="textover">
-                    <img src='../crud/category/img/<?= $special['image'] ?>' alt='images'>
+                    <img src='../crud/category/img/<?= $row['image'] ?>' alt='images'>
                     <figcaption>
-                        <?= $special['title'] ?>
+                        <?= $row['title'] ?>
                     </figcaption>
                 </figure>
             </a>
         </div>
         <?php
+            }
         }
         ?>
     </div>
@@ -338,22 +214,26 @@ $(document).ready(function() {
     <section class="section-about">
         <div class="page-container">
             <?php
-            foreach ($getCompanyInfo as $companyInfo) {
+            $company = new CompanyController;
+            $result = $company->companyInfo();
+            if ($result) {
+                foreach ($result as $row) {
             ?>
             <div class="about">
                 <div class="image">
-                    <img class="" src="../crud/company/img/<?= $companyInfo['image'] ?>" alt="Card image cap">
+                    <img src="../crud/company/img/<?= $row['image'] ?>" alt="Card image cap">
                 </div>
                 <div class="text">
-                    <h2 class="">
-                        <?php echo $companyInfo['title']; ?>
+                    <h2>
+                        <?php echo $row['title']; ?>
                     </h2>
                     <p>
-                        <?php echo $companyInfo['description'] ?>
+                        <?php echo $row['description'] ?>
                     </p>
                 </div>
             </div>
             <?php
+                }
             }
             ?>
         </div>
@@ -366,7 +246,7 @@ $(document).ready(function() {
         <h2 class="myHead">Check out our blog for the latest news</h2>
         <?php
         $news = new NewsController;
-        $result = $news->index();
+        $result = $news->frontNews();
         if ($result) {
             foreach ($result as $row) {
         ?>
@@ -402,38 +282,6 @@ $(document).ready(function() {
     </div>
 </div>
 
-<script>
-$(document).ready(function() {
-            $(".row-eq").each(function() {
-                equalColHeights($(this));
-            });
-            window.onresize = function() {
-                $(".row-eq").each(function() {
-                    equalColHeights($(this));
-                });
-            };
-
-            const accordion = document.getElementsByClassName("container");
-
-            for (i = 0; i < accordion.length; i++) {
-                accordion[i].addEventListener("click", function() {
-                    this.classList.toggle("active");
-                });
-            }
-
-            function equalColHeights(ele) {
-                var highestCol = 0;
-                $(ele)
-                    .children(".col")
-                    .each(function() {
-                        $(this).css("height", "auto");
-                        if (highestCol < $(this).height()) {
-                            highestCol = $(this).height();
-                        }
-                        $(ele).children(".col").height(highestCol);
-                    });
-            }
-        }
-</script>
+<script type="text/javascript" src="../assets/js/main.js"></script>
 
 <?php require("../includes/layout/frontFooter.php") ?>
