@@ -1,35 +1,18 @@
 <?php
 require_once "../DB/dbcon.php";
 require "../includes/layout/backHeader.php";
-?>
 
-<?php
 $dbCon = dbCon($user, $pass);
 $query = $dbCon->prepare("SELECT * FROM brand");
 $query->execute();
 $getBrand = $query->fetchAll();
-//var_dump($getUsers);
 ?>
 
 <body>
     <div class="container">
-        <!-- <?php
-              // if (isset($_GET['status'])) {
-              //     if ($_GET['status'] == "deleted") {
-              //         echo "The entry " . $_GET['id'] . " has been successfully deleted!";
-              //         echo "<script>M.toast({html: 'Deleted!'})</script>";
-              //     } elseif ($_GET['status'] == "updated") {
-              //         echo "The entry " . $_GET['id'] . " has been successfully Updated!";
-              //         echo "<script>M.toast({html: 'Updated!'})</script>";
-              //     } elseif ($_GET['status'] == "added") {
-              //         echo "The new entry has been successfully added!";
-              //         echo "<script>M.toast({html: 'Added!'})</script>";
-              //     }
-              // }
-              ?> -->
         <div class="column">
             <h3>Add New Brand</h3>
-            <form class="" name="category" method="post" enctype="multipart/form-data"
+            <form class="" name="brand" method="post" enctype="multipart/form-data"
                 action="../crud/brand/addBrand.php">
                 <div class="column">
                     <div class="input-field">
@@ -75,8 +58,8 @@ $getBrand = $query->fetchAll();
                             echo "<td>";
 
                             echo "</td>";
-                            echo '<td><a href="../crud/news/editNews.php?id=' . $getBrand['brand_id'] . '" class="waves-effect waves-light btn" ">Edit</a></td>';
-                            echo '<td><a href="../crud/news/deleteNews.php?id=' . $getBrand['brand_id'] . '" class="waves-effect waves-light btn red" onclick="return confirm(\'Delete! are you sure?\')">Delete</a></td>';
+                            echo '<td><a href="editBrand.php?id=' . $getBrand['brand_id'] . '" class="waves-effect waves-light btn" ">Edit</a></td>';
+                            echo '<td><a href="../crud/brand/deleteBrand.php?id=' . $getBrand['brand_id'] . '" class="waves-effect waves-light btn red" onclick="return confirm(\'Delete! are you sure?\')">Delete</a></td>';
                             echo "</tr>";
                         }
                         ?>

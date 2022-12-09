@@ -37,7 +37,7 @@ require_once "../controller/CompanyController.php";
     <div class="arrow arrow-right"><i class="fas fa-chevron-circle-right"></i></div>
 </div>
 
-<div class="block">
+<div class="page-container">
     <h2 class="myHead">Latest Drops</h2>
     <div class="carousel">
         <div class="">
@@ -69,7 +69,7 @@ require_once "../controller/CompanyController.php";
     </div>
 </div>
 
-<div class="block">
+<div class="page-container">
     <h2 class="myHead">Popular Sneakers</h2>
     <div class="carousel">
         <div class="">
@@ -145,6 +145,7 @@ require_once "../controller/CompanyController.php";
         <div class="image">
             <img class="" src="../crud/products/img/<?= $row['image'] ?>" alt="Card image cap">
         </div>
+
         <div class="text">
             <h2>
                 <?= $row['title'] ?>
@@ -161,28 +162,6 @@ require_once "../controller/CompanyController.php";
     </div>
 </div>
 
-<!-- <div class="block">
-    <h2 class="myHead">Our Brands</h2>
-    <div class="slider">
-        <div class="slide-track">
-            <?php
-            $brand = new BrandController;
-            $result = $brand->view();
-            if ($result) {
-                foreach ($result as $row) {
-            ?>
-            <div class="slide">
-                <img src="../crud/brand/img/<?= $row['image'] ?>" height="100" width="250" alt="" />
-
-            </div>
-            <?php
-                }
-            }
-            ?>
-        </div>
-    </div>
-</div> -->
-
 <div class="page-container">
     <div class="limited-sale">
         <?php
@@ -191,7 +170,6 @@ require_once "../controller/CompanyController.php";
         if ($result) {
             foreach ($result as $row) {
         ?>
-
         <div>
             <a href="products.php?cat_id=<?= $row['cat_id'] ?>">
                 <figure class="textover">

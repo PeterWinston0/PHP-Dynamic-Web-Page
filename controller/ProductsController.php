@@ -21,7 +21,7 @@ class ProductsController
 
     public function latestProduct()
     {
-        $productsQuery = "SELECT * FROM latestProducts";
+        $productsQuery = "SELECT * FROM latest_products";
         $result = $this->conn->query($productsQuery);
         if($result->num_rows > 0){
             return $result; 

@@ -16,7 +16,7 @@ if (isset($_POST['submit'])){
             echo "Size: ". $_FILES['file']['size']. "<br>";
             echo "Temp file: ".$_FILES['file']['tmp_name']. "<br>";
 
-            if (file_exists("img/".$_FILES['file']['name'])){
+            if (file_exists("../img/".$_FILES['file']['name'])){
                 echo "no dude, you already have tha file!";
             }else{
                 move_uploaded_file($_FILES['file']['tmp_name'], "img/".$_FILES['file']['name']);

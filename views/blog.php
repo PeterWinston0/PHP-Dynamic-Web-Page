@@ -10,11 +10,11 @@ require_once "../controller/NewsController.php";
     <div class="row news">
         <h2 class="myHead">News</h2>
         <?php
-    $news = new NewsController;
-    $result = $news->allNews();
-    if ($result) {
-        foreach ($result as $row) {
-    ?>
+        $news = new NewsController;
+        $result = $news->allNews();
+        if ($result) {
+            foreach ($result as $row) {
+        ?>
 
         <div class="example-1 card">
             <div class="wrapper">
@@ -38,9 +38,9 @@ require_once "../controller/NewsController.php";
             </div>
         </div>
         <?php
+            }
         }
-    }
-    ?>
+        ?>
     </div>
 </div>
 

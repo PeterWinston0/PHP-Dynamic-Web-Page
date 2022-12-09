@@ -1,16 +1,9 @@
 <?php
-// require_once("../db/dbconn.php");
-// require_once("../db/dbcon.php");
-// require_once('../includes/config.php');
-// require_once('../includes/helpers.php');
-// require_once('../classes/dbcon.php');
-
 require_once "../controller/CategoryController.php";
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,13 +23,11 @@ require_once "../controller/CategoryController.php";
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <!-- CUSTOM -->
     <link rel="stylesheet" href="../assets/css/frontStyle.css">
 </head>
 
 <body>
-
     <nav class="nav-container">
         <h1><a href="index.php">Sneaker Dreams</a></h1>
         <div class="nav-btn">
@@ -47,7 +38,7 @@ require_once "../controller/CategoryController.php";
             <a href=" cart.php" style="color:#ffffff;">
                     <i class="fa fa-shopping-cart" "></i>
                 <?php
-                    echo (isset($_SESSION['cart_items']) && count($_SESSION['cart_items'])) > 0 ? count($_SESSION['cart_items']) : '';
+                echo (isset($_SESSION['cart_items']) && count($_SESSION['cart_items'])) > 0 ? count($_SESSION['cart_items']) : '';
                 ?>
             </a>
 
@@ -84,7 +75,7 @@ require_once "../controller/CategoryController.php";
             <li><a href="cart.php" style="color:#ffffff">
                     <i class="fa fa-shopping-cart"></i>
                     <?php
-                        echo (isset($_SESSION['cart_items']) && count($_SESSION['cart_items'])) > 0 ? count($_SESSION['cart_items']) : '';
+                    echo (isset($_SESSION['cart_items']) && count($_SESSION['cart_items'])) > 0 ? count($_SESSION['cart_items']) : '';
                     ?>
                 </a>
             </li>
@@ -129,7 +120,6 @@ require_once "../controller/CategoryController.php";
     </div>
 
     <script>
-
         //SLIDE DOWN AND UP TOGGLE
         $(document).ready(function () {
             $(".search-container").hide();

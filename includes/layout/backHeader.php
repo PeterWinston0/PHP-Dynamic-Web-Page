@@ -8,14 +8,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-    
+    <!-- CK-EDITOR -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.18.0/ckeditor.js" integrity="sha512-woYV6V3QV/oH8txWu19WqPPEtGu+dXM87N9YXP6ocsbCAH1Au9WDZ15cnk62n6/tVOmOo0rIYwx05raKdA4qyQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <!-- CUSTOM -->
     <link rel="stylesheet" href="../../assets/css/adminStyle.css">
-
     <style>
         html {
             position: relative;
@@ -669,7 +669,7 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
+                <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-fw fa-envelope"></i>
@@ -707,8 +707,8 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item small" href="#">View all messages</a>
                     </div>
-                </li>
-                <li class="nav-item dropdown">
+                </li> -->
+                <!--<li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-fw fa-bell"></i>
@@ -719,7 +719,7 @@
                             <i class="fa fa-fw fa-circle"></i>
                         </span>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="alertsDropdown">
+                     <div class="dropdown-menu" aria-labelledby="alertsDropdown">
                         <h6 class="dropdown-header">New Alerts:</h6>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">
@@ -753,9 +753,9 @@
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item small" href="#">View all alerts</a>
-                    </div>
-                </li>
-                <li class="nav-item">
+                    </div> 
+                </li>-->
+                <!-- <li class="nav-item">
                     <form class="form-inline my-2 my-lg-0 mr-lg-2">
                         <div class="input-group">
                             <input class="form-control" type="text" placeholder="Search for...">
@@ -766,7 +766,7 @@
                             </span>
                         </div>
                     </form>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
                         <i class="fa fa-fw fa-sign-out"></i>Logout</a>

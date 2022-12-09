@@ -19,8 +19,8 @@ $getAllNews = $query->fetchAll();
     <div class="news-container" style="">
         <div class="single-news">
             <?php
-        foreach ($getNews as $news) {
-        ?>
+            foreach ($getNews as $news) {
+            ?>
 
             <img class="" src="../crud/news/img/<?= $news['image'] ?>" alt="Card image cap">
             <div class="body">
@@ -34,23 +34,23 @@ $getAllNews = $query->fetchAll();
 
 
             <?php
-        }
-        ?>
+            }
+            ?>
 
         </div>
         <div class="all-news">
             <?php
-        foreach ($getAllNews as $allNews) {
-        ?>
-        <div>
-            <img class="" src="../crud/news/img/<?= $allNews['image'] ?>" alt="Card image cap">
-            <h4 class="title">
-                <?= $allNews['title'] ?>
-            </h4>
+            foreach ($getAllNews as $allNews) {
+            ?>
+            <div>
+                <img class="" src="../crud/news/img/<?= $allNews['image'] ?>" alt="Card image cap">
+                <h4 class="title">
+                    <?= $allNews['title'] ?>
+                </h4>
             </div>
             <?php
-        }
-        ?>
+            }
+            ?>
         </div>
     </div>
 </div>
