@@ -8,7 +8,6 @@ if (!isset($_SESSION['confirm_order']) || empty($_SESSION['confirm_order'])) {
     header('location:index.php');
     exit();
 }
-
 require "../includes/layout/frontHeader.php";
 ?>
 <div class="page-container">
@@ -67,7 +66,6 @@ require "../includes/layout/frontHeader.php";
                 </strong>
             </div>
             <?php } ?>
-
         </div>
         <?php unset($_SESSION['order_number']); ?>
         <?php unset($_SESSION['confirm_order']); ?>

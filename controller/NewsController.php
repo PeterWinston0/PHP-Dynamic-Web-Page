@@ -1,5 +1,5 @@
 <?php
-//require_once("../db/dbconn.php");
+require_once("../db/dbconn.php");
 
 class NewsController
 {
@@ -20,7 +20,7 @@ class NewsController
         }
     }
 
-    public function allNews()
+    public function all()
     {
         $newsQuery = "SELECT * FROM news ORDER BY id DESC";
         $result = $this->conn->query($newsQuery);

@@ -11,7 +11,7 @@ require_once "../controller/NewsController.php";
         <h2 class="myHead">News</h2>
         <?php
         $news = new NewsController;
-        $result = $news->allNews();
+        $result = $news->all();
         if ($result) {
             foreach ($result as $row) {
         ?>

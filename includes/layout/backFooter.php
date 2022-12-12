@@ -249,4 +249,6 @@ $(document).ready(function() {
 })(jQuery); // End of use strict
 </script>
 
+<script src="../assets/js/adminTabs.js"></script>
+
 </html>

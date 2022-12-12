@@ -1,15 +1,9 @@
 <?php
 require_once "../DB/dbcon.php";
+require_once "../controller/CompanyController.php";
 require "../includes/layout/backHeader.php";
-?>
-
-<?php
 
 $dbCon = dbCon($user, $pass);
-
-$query = $dbCon->prepare("SELECT * FROM carousel ORDER BY id ASC");
-$query->execute();
-$getSlides = $query->fetchAll();
 
 if (isset($_GET['com_id'])) {
 
@@ -22,48 +16,16 @@ if (isset($_GET['com_id'])) {
     $results = $query->fetchAll(PDO::FETCH_OBJ);
 ?>
 
-<head>
-    <style>
-        .content {
-            width: 90%;
-            display: none;
-        }
-
-        .active {
-            display: block;
-        }
-
-        .nav-tabs {
-            list-style-type: none;
-            padding: 5px;
-        }
-
-        .nav-tabs li {
-            display: inline;
-            padding: 5px 10px;
-            background: lightgrey;
-            cursor: pointer;
-        }
-
-        li.active-tab {
-            background: lightblue;
-        }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-</head>
-
 <div class="container">
-
     <ul class="nav-tabs">
         <li class="active-tab" data-link="page-1">Info</li>
         <li data-link="page-2">Slides</li>
         <li data-link="page-3">Hours</li>
-        <li data-link="page-4">Fourth Page</li>
     </ul>
     <div class="content active" id="page-1">
         <?php
     foreach ($results as $result) {
-    ?>
+        ?>
         <div class="column">
             <div class="column">
                 <h3>Editing Company Info "
@@ -119,14 +81,13 @@ if (isset($_GET['com_id'])) {
         </div>
         <?php
     }
-    ?>
+        ?>
     </div>
     <div class="content" id="page-2">
         <h2>All Slides</h2>
         <table class="highlight">
             <thead>
                 <tr>
-                    <th>slideID</th>
                     <th>image</th>
                     <th>title</th>
                     <th>Position</th>
@@ -136,44 +97,28 @@ if (isset($_GET['com_id'])) {
             </thead>
 
             <tbody>
-                <?php
-    foreach ($getSlides as $slides) {
-        echo "<tr>";
-        echo "<td>" . $slides['id'] . "</td>";
-        echo "<td>" . "<img src='../crud/company/img/" . $slides['image'] . "' width='120' height='120' alt='images'>" . "</td>";
-        echo "<td>" . $slides['text'] . "</td>";
-        echo "<td>" . $slides['no_order'] . "</td>";
+            <?php
+    $company = new CompanyController;
+    $result = $company->Slides();
+    if ($result) {
+        foreach ($result as $row) {
+            echo "<tr>";
+            echo "<td>" . "<img src='../crud/company/img/" . $row['image'] . "' width='120' height='120' alt='images'>" . "</td>";
+            echo "<td>" . $row['text'] . "</td>";
+            echo "<td>" . $row['no_order'] . "</td>";
 
-        echo '<td><a href="editSlides.php?car_id=' . $slides['id'] . '" class="waves-effect waves-light btn" ">Edit</a></td>';
-        //echo '<td><a href="../crud/products/deleteProduct.php?id=' . $slides['id'] . '" class="waves-effect waves-light btn red" onclick="return confirm(\'Delete! are you sure?\')">Delete</a></td>';
-        echo "</tr>";
+            echo '<td><a href="editSlides.php?car_id=' . $row['id'] . '" class="waves-effect waves-light btn" ">Edit</a></td>';
+            echo "</tr>";
+        }
     }
-                    ?>
+                ?>
             </tbody>
         </table>
     </div>
     <div class="content" id="page-3">
         This is going to be the content for the third page. This block isn't even visible until jQuery and user action
         makes it so. </div>
-    <div class="content" id="page-4">
-        This is going to be the content for the fourth page. This block isn't even visible until jQuery and user action
-        makes it so. </div>
-
 </div>
-
-<script>
-    // page is ready to go via HTML, jquery only comes into play when user interacts. 
-    $(".nav-tabs li").click(function () {
-        // only executes if tab/page not active
-        if (!$(this).hasClass('active-tab')) {
-            $(".nav-tabs li").removeClass("active-tab");
-            $(this).addClass('active-tab');
-            var page = "#" + $(this).attr("data-link");
-            $(".content").removeClass('active');
-            $(page).addClass('active');
-        }
-    });
-</script>
 
 <?php } else {
     header("Location: company.php?status=0");

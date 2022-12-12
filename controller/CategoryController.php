@@ -9,6 +9,17 @@ class CategoryController
         $this->conn = $db->conn;
     }
 
+    public function all()
+    {
+        $catQuery = "SELECT * FROM category";
+        $result = $this->conn->query($catQuery);
+        if ($result->num_rows > 0) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
     public function navCat()
     {
         $catQuery = "SELECT * FROM category ORDER BY no_order ASC LIMIT 4 ";

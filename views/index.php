@@ -13,7 +13,7 @@ require_once "../controller/CompanyController.php";
 <div class="container">
     <?php
     $company = new CompanyController;
-    $result = $company->frontSlides();
+    $result = $company->slides();
     if ($result) {
         foreach ($result as $row) {
     ?>
