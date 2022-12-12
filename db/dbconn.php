@@ -1,8 +1,8 @@
 <?php
-    define('DB_HOST', 'localhost');
-    define('DB_USER', 'peter');
-    define('DB_PASSWORD', '1234');
-    define('DB_DATABASE', 'webshop');
+define('DB_HOST', 'localhost');
+define('DB_USER', 'peter');
+define('DB_PASSWORD', '1234');
+define('DB_DATABASE', 'webshop');
 
 class DatabaseConnection
 {

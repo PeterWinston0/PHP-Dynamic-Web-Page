@@ -1,6 +1,7 @@
 <?php
 $title = "Contact Page";
 
+require_once('../includes/helpers.php');
 require "../_test/captcha.php";
 require "../includes/layout/frontHeader.php";
 
@@ -136,9 +137,9 @@ if (isset($_POST['contact-mail'])) {
                                 <!-- <label>Are you human?</label> -->
                                 <div class="captcha">
                                     <?php
-                                $PHPCAP->prime();
-                                $PHPCAP->draw();
-                                ?>
+                                    $PHPCAP->prime();
+                                    $PHPCAP->draw();
+                                    ?>
                                 </div>
                                 <div class="captcha">
                                     <input placeholder="Enter Captcha" name="captcha" type="text">
@@ -154,6 +155,7 @@ if (isset($_POST['contact-mail'])) {
         </div>
     </div>
 </div>
+
 <?php
 require "../includes/layout/frontFooter.php";
 ?>

@@ -23,63 +23,69 @@ if (isset($_GET['product']) && !empty($_GET['product']) && is_numeric($_GET['pro
     $error = '404! No record found';
 }
 
-if (isset($_POST['add_to_cart']) && $_POST['add_to_cart'] == 'add to cart') {
-    $productID = intval($_POST['product_id']);
-    $productQty = intval($_POST['product_qty']);
+//QUANTITY VALIDATETION RESET TO 1 
+$qtyError = '';
+$productQty = intval($_POST['product_qty']);
 
-    $sql = "SELECT * FROM product WHERE product.id =:productID";
+if (empty($productQty)) {
+    $qtyError = 'You need to fill in your amount';
+} else {
+    if (isset($_POST['add_to_cart']) && $_POST['add_to_cart'] == 'add to cart') {
 
-    $prepare = $db->prepare($sql);
+        $productID = intval($_POST['product_id']);
+        $productQty = intval($_POST['product_qty']);
 
-    $params = [
-        ':productID' => $productID,
-    ];
+        $sql = "SELECT * FROM product WHERE product.id =:productID";
 
-    $prepare->execute($params);
-    $fetchProduct = $prepare->fetch(PDO::FETCH_ASSOC);
+        $prepare = $db->prepare($sql);
 
-    $calculateTotalPrice = number_format($productQty * $fetchProduct['price'], 2);
+        $params = [
+            ':productID' => $productID,
+        ];
 
-    $cartArray = [
-        'product_id' => $productID,
-        'qty' => $productQty,
-        'product_name' => $fetchProduct['title'],
-        'product_price' => $fetchProduct['price'],
-        'total_price' => $calculateTotalPrice,
-        'product_img' => $fetchProduct['image']
-    ];
+        $prepare->execute($params);
+        $fetchProduct = $prepare->fetch(PDO::FETCH_ASSOC);
 
-    if (isset($_SESSION['cart_items']) && !empty($_SESSION['cart_items'])) {
-        $productIDs = [];
-        foreach ($_SESSION['cart_items'] as $cartKey => $cartItem) {
-            $productIDs[] = $cartItem['product_id'];
-            if ($cartItem['product_id'] == $productID) {
-                $_SESSION['cart_items'][$cartKey]['qty'] = $productQty;
-                $_SESSION['cart_items'][$cartKey]['total_price'] = $calculateTotalPrice;
-                break;
+        $calculateTotalPrice = number_format($productQty * $fetchProduct['price'], 2);
+
+        $cartArray = [
+            'product_id' => $productID,
+            'qty' => $productQty,
+            'product_name' => $fetchProduct['title'],
+            'product_price' => $fetchProduct['price'],
+            'total_price' => $calculateTotalPrice,
+            'product_img' => $fetchProduct['image']
+        ];
+
+        if (isset($_SESSION['cart_items']) && !empty($_SESSION['cart_items'])) {
+            $productIDs = [];
+            foreach ($_SESSION['cart_items'] as $cartKey => $cartItem) {
+                $productIDs[] = $cartItem['product_id'];
+                if ($cartItem['product_id'] == $productID) {
+                    $_SESSION['cart_items'][$cartKey]['qty'] = $productQty;
+                    $_SESSION['cart_items'][$cartKey]['total_price'] = $calculateTotalPrice;
+                    break;
+                }
             }
-        }
 
-        if (!in_array($productID, $productIDs)) {
+            if (!in_array($productID, $productIDs)) {
+                $_SESSION['cart_items'][] = $cartArray;
+            }
+
+            $successMsg = true;
+
+        } else {
             $_SESSION['cart_items'][] = $cartArray;
+            $successMsg = true;
         }
-
-        $successMsg = true;
-
-    } else {
-        $_SESSION['cart_items'][] = $cartArray;
-        $successMsg = true;
     }
-
 }
 
-//$dbCon = dbCon($user, $pass);
 $query = $db->prepare("SELECT * FROM product, product_related WHERE fk_product = product.id AND product_id = $prodID");
 $query->execute();
 $getRelatedProducts = $query->fetchAll();
 
 require "../includes/layout/frontHeader.php";
-
 ?>
 <div class="page-container" style="background-color: white;">
     <?php if (isset($getProductData) && is_array($getProductData)) { ?>
@@ -114,7 +120,7 @@ require "../includes/layout/frontHeader.php";
             <form class="form-inline" method="POST">
                 <div class="form-group mb-2">
                     <input type="number" name="product_qty" id="productQty" class="form-control" placeholder="Quantity"
-                        min="1" max="1000" value="1">
+                        min="1" max="5" oninput="validity.valid||(value='');" value="1">
                     <input type="hidden" name="product_id" value="<?php echo $getProductData['id'] ?>">
                 </div>
                 <div class="form-group mb-2 ml-2">

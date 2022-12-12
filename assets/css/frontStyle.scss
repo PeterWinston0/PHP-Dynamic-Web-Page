@@ -9,6 +9,12 @@ body {
   margin: auto auto;
 }
 
+.my-title {
+  font-size: 40px;
+  text-transform: uppercase;
+  padding: 20px 0 20px 0;
+}
+
 .page-title {
   font-size: 22px;
   padding: 10px 20px 0px 20px;
@@ -165,13 +171,10 @@ body {
       position: absolute;
       margin-top: 10px;
       right: 205px;
-
-
       i {
         font-size: 30px;
       }
     }
-
   }
 }
 
@@ -184,25 +187,33 @@ body {
 
 .cart-wrap {
   width: 75%;
+  border: 1px solid lightgrey;
+    background-color: white;
+    padding: 20px;
 
   table {
     width: 100%;
-    background-color: white;
+    
   }
 }
 
 .summary-wrap {
   padding: 10px;
   width: 23%;
-  background-color: lightgray;
+  border: 1px solid lightgrey;
+  background-color: white;
 }
 
 .cart-empty {
   width: 100%;
   text-align: center;
+  background-color: white;
+  border: 1px solid lightgrey;
+  padding-bottom: 15vh;
+  padding-top: 15vh;
 
   i {
-    margin-top: 10vh;
+
     font-size: 60px;
     margin-bottom: 30px;
   }
@@ -222,7 +233,8 @@ body {
     background-color: black;
     border-radius: 20px;
     color: white;
-    margin-bottom: 20vh;
+    width: 140px;
+    margin: auto auto;
   }
 }
 
@@ -256,6 +268,7 @@ body {
   width: 70%;
   padding: 20px;
   border: 1px solid lightgrey;
+  background-color: white;
   margin-bottom: 10vh;
 
   h4 {
@@ -314,6 +327,7 @@ body {
 .summary-block {
   width: 25%;
   border: 1px solid lightgrey;
+  background-color: white;
   padding: 20px;
   height: fit-content;
 

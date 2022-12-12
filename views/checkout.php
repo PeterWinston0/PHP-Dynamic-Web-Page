@@ -129,136 +129,143 @@ if (isset($_POST['submit'])) {
     } else {
       $zipCodeValue = $_POST['zipcode'];
     }
-
-
     if (isset($_POST['address2']) || !empty($_POST['address2'])) {
       $address2Value = $_POST['address2'];
     }
-
   }
 }
 
 require "../includes/layout/frontHeader.php";
 ?>
 <div class="page-container">
-  <div class="row checkout-container">
-
-    <div class="billing-block">
-      <h4 class="mb-3">Shipping Information</h4>
-      <?php
+    <div class="row checkout-container">
+        <div class="billing-block">
+        <h1 class="my-title">Checkout</h1>
+            <h4 class="mb-3">Shipping Information</h4>
+            <?php
       if (isset($errorMsg) && count($errorMsg) > 0) {
         foreach ($errorMsg as $error) {
           echo '<div class="alert alert-danger">' . $error . '</div>';
         }
       }
       ?>
-      <form class="needs-validation" method="POST">
-        <div class="txt-wrap">
-          <div class="half-txt">
-            <div class="">
-              <label for="firstName">First name</label>
-              <input type="text" class="form-control txt" id="firstName" name="first_name" placeholder="First Name"
-                value="<?php echo (isset($fnameValue) && !empty($fnameValue)) ? $fnameValue : '' ?>">
-            </div>
-          </div>
-          <div class="half-txt">
-            <div class="">
-              <label for="lastName">Last name</label>
-              <input type="text" class="form-control txt" id="lastName" name="last_name" placeholder="Last Name"
-                value="<?php echo (isset($lnameValue) && !empty($lnameValue)) ? $lnameValue : '' ?>">
-            </div>
-          </div>
+            <form class="needs-validation" method="POST">
+                <div class="txt-wrap">
+                    <div class="half-txt">
+                        <div class="">
+                            <label for="firstName">First name</label>
+                            <input type="text" class="form-control txt" id="firstName" name="first_name"
+                                placeholder="First Name"
+                                value="<?php echo (isset($fnameValue) && !empty($fnameValue)) ? $fnameValue : '' ?>">
+                        </div>
+                    </div>
+                    <div class="half-txt">
+                        <div class="">
+                            <label for="lastName">Last name</label>
+                            <input type="text" class="form-control txt" id="lastName" name="last_name"
+                                placeholder="Last Name"
+                                value="<?php echo (isset($lnameValue) && !empty($lnameValue)) ? $lnameValue : '' ?>">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="full-txt">
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control txt" id="address" name="address" placeholder="1234 Main St"
+                        value="<?php echo (isset($addressValue) && !empty($addressValue)) ? $addressValue : '' ?>">
+                </div>
+
+                <div class="full-txt">
+                    <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+                    <input type="text" class="form-control txt" id="address2" name="address2"
+                        placeholder="Apartment or suite"
+                        value="<?php echo (isset($address2Value) && !empty($address2Value)) ? $address2Value : '' ?>">
+                </div>
+
+                <div class="full-txt">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control txt" id="email" name="email" placeholder="you@example.com"
+                        value="<?php echo (isset($emailValue) && !empty($emailValue)) ? $emailValue : '' ?>">
+                </div>
+                <div class="txt-wrap">
+                    <div class="three-quart-txt">
+                        <label for="city">City</label>
+                        <input type="city" class="form-control txt" id="city" name="city" placeholder="city" value="">
+                    </div>
+
+                    <div class="quart-txt">
+                        <label for="zip">Zip</label>
+                        <input type="text" class="form-control txt" id="zip" name="zipcode" placeholder=""
+                            value="<?php echo (isset($zipCodeValue) && !empty($zipCodeValue)) ? $zipCodeValue : '' ?>">
+                    </div>
+                </div>
+                <hr class="mb-4">
+
+                <h4 class="">Payment</h4>
+
+                <div class="payment-options">
+                    <div class="payment-radio">
+                        <input id="cash" name="custom-radio" type="radio" checked="checked" value="1" class="">
+                        <label class="custom-control-label" for="cash">Cash on Delivery</label>
+                    </div>
+                    <div class="payment-radio">
+                        <input id="card" name="custom-radio" type="radio" value="2" class="">
+                        <label class="custom-control-label" for="card">Card</label>
+                    </div>
+                </div>
+
+                <hr class="mb-4">
+
+                <div id="card2" class="card-payment">
+                    <div class="full-txt">
+                        <label for="card-nr">Card Number</label>
+                        <input type="text" class="form-control txt" id="card-nr" name="card-nr"
+                            placeholder="Card Number" value="">
+                    </div>
+                    <div class="txt-wrap">
+                        <div class="third-txt">
+                            <label for="card-nr">Month</label>
+                            <input type="text" class="form-control txt" id="card-nr" name="card-nr" placeholder="Month"
+                                value="">
+                        </div>
+                        <div class="third-txt">
+                            <label for="card-nr">Year</label>
+                            <input type="text" class="form-control txt" id="card-nr" name="card-nr" placeholder="Year"
+                                value="">
+                        </div>
+                        <div class="third-txt">
+                            <label for="card-nr">Security</label>
+                            <input type="text" class="form-control txt" id="card-nr" name="card-nr"
+                                placeholder="Last Three" value="">
+                        </div>
+                    </div>
+                    <hr class="mb-4">
+                </div>
+
+                <script type="text/javascript">
+                  $(document).ready(function() {
+                    $("div.card-payment").hide();
+                        $("input[name$='custom-radio']").click(function() {
+                            var test = $(this).val();
+                            $("div.card-payment").hide();
+                            $("#card" + test).show();
+                        });
+                    });
+                </script>
+                <div class="checkout-submit">
+                    <button class="place-order-btn" type="submit" name="submit" value="submit">Place Order</button>
+                    <p>By clicking PLACE ORDER you agree to DreamSneaker's <br>
+                        Terms and Conditions and Privacy Policy</p>
+                </div>
+
+            </form>
         </div>
 
-        <div class="full-txt">
-          <label for="address">Address</label>
-          <input type="text" class="form-control txt" id="address" name="address" placeholder="1234 Main St"
-            value="<?php echo (isset($addressValue) && !empty($addressValue)) ? $addressValue : '' ?>">
-        </div>
+        <div class="summary-block">
+            <h2>Order Summary</h2>
+            <?php if (isset($_SESSION['cart_items']) && count($_SESSION['cart_items']) > 0) { ?>
 
-        <div class="full-txt">
-          <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-          <input type="text" class="form-control txt" id="address2" name="address2" placeholder="Apartment or suite"
-            value="<?php echo (isset($address2Value) && !empty($address2Value)) ? $address2Value : '' ?>">
-        </div>
-
-        <div class="full-txt">
-          <label for="email">Email</label>
-          <input type="email" class="form-control txt" id="email" name="email" placeholder="you@example.com"
-            value="<?php echo (isset($emailValue) && !empty($emailValue)) ? $emailValue : '' ?>">
-        </div>
-        <div class="txt-wrap">
-          <div class="three-quart-txt">
-            <label for="city">City</label>
-            <input type="city" class="form-control txt" id="city" name="city" placeholder="city" value="">
-          </div>
-
-          <div class="quart-txt">
-            <label for="zip">Zip</label>
-            <input type="text" class="form-control txt" id="zip" name="zipcode" placeholder=""
-              value="<?php echo (isset($zipCodeValue) && !empty($zipCodeValue)) ? $zipCodeValue : '' ?>">
-          </div>
-        </div>
-        <hr class="mb-4">
-
-        <h4 class="">Payment</h4>
-
-        <div class="payment-options">
-          <div class="payment-radio">
-            <input id="cash" name="custom-radio" type="radio" checked="checked" value="1" class="">
-            <label class="custom-control-label" for="cash">Cash on Delivery</label>
-          </div>
-          <div class="payment-radio">
-            <input id="card" name="custom-radio" type="radio" value="2" class="">
-            <label class="custom-control-label" for="card">Card</label>
-          </div>
-        </div>
-
-        <hr class="mb-4">
-
-        <div id="card2" class="card-payment">
-          <div class="full-txt">
-            <label for="card-nr">Card Number</label>
-            <input type="text" class="form-control txt" id="card-nr" name="card-nr" placeholder="Card Number" value="">
-          </div>
-          <div class="txt-wrap">
-            <div class="third-txt">
-              <label for="card-nr">Month</label>
-              <input type="text" class="form-control txt" id="card-nr" name="card-nr" placeholder="Month" value="">
-            </div>
-            <div class="third-txt">
-              <label for="card-nr">Year</label>
-              <input type="text" class="form-control txt" id="card-nr" name="card-nr" placeholder="Year" value="">
-            </div>
-            <div class="third-txt">
-              <label for="card-nr">Security</label>
-              <input type="text" class="form-control txt" id="card-nr" name="card-nr" placeholder="Last Three" value="">
-            </div>
-          </div>
-          <hr class="mb-4">
-        </div>
-
-        <script type="text/javascript">          ent).ready(function () {
-                   yment").hide();
-                                                   $(io']").click(function () {
-              var te st = $("div.card-payment").hid + test).show();
-            });
-          });
-        </script>
-        <div class="checkout-submit">
-          <button class="place-order-btn" type="submit" name="submit" value="submit">Place Order</button>
-          <p>By clicking PLACE ORDER you agree to DreamSneaker's <br>
-            Terms and Conditions and Privacy Policy</p>
-        </div>
-
-      </form>
-    </div>
-
-    <div class="summary-block">
-      <h2>Order Summary</h2>
-      <?php if (isset($_SESSION['cart_items']) && count($_SESSION['cart_items']) > 0) { ?>
-
-      <?php
+            <?php
         $totalCounter = 0;
         $itemCounter = 0;
         foreach ($_SESSION['cart_items'] as $key => $item) {
@@ -271,39 +278,37 @@ require "../includes/layout/frontHeader.php";
       ?>
 
 
-      <li class="order-summary">
-        <div>
-          <img src="<?php echo $imgUrl; ?>" class="rounded img-thumbnail mr-2" style="">
-        </div>
-        <div>
-          <h6 class="my-0">
-            <?php echo $item['product_name'] ?>
-          </h6>
-          <small class="text-muted">Quantity:
-            <?php echo $item['qty'] ?> X Price:
-            <?php echo $item['product_price'] ?>
-          </small>
-          <br>
-          <span class="text-muted">$
-            <?php echo $total; ?>
-            <!-- <?php echo $item['total_price'] ?> -->
-          </span>
-        </div>
+            <li class="order-summary">
+                <div>
+                    <img src="<?php echo $imgUrl; ?>" class="rounded img-thumbnail mr-2" style="">
+                </div>
+                <div>
+                    <h6 class="my-0">
+                        <?php echo $item['product_name'] ?>
+                    </h6>
+                    <small class="text-muted">Quantity:
+                        <?php echo $item['qty'] ?> X Price:
+                        <?php echo $item['product_price'] ?>
+                    </small>
+                    <br>
+                    <span class="text-muted">$
+                        <?php echo $total; ?>
+                    </span>
+                </div>
 
-      </li>
-      <?php } ?>
-      <div class="total-price">
-        <strong>
-          <p>Total</p>
-          <p>DKK
-            <?php echo $totalCounter; ?> ,-
-          </p>
-          <!-- <?php echo $item['total_price'] ?> -->
-        </strong>
-      </div>
-      <?php } ?>
+            </li>
+            <?php } ?>
+            <div class="total-price">
+                <strong>
+                    <p>Total</p>
+                    <p>DKK
+                        <?php echo $totalCounter; ?> ,-
+                    </p>
+                </strong>
+            </div>
+            <?php } ?>
 
+        </div>
     </div>
-  </div>
 </div>
 <?php require "../includes/layout/frontFooter.php"; ?>

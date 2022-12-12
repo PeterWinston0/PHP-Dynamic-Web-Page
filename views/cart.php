@@ -15,21 +15,9 @@ if (isset($_GET['action'], $_GET['item']) && $_GET['action'] == 'remove') {
 }
 
 require "../includes/layout/frontHeader.php";
+
 ?>
-
-<!-- <head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js"></script>
-
-</head> -->
-
 <div class="page-container">
-    <div class="page-title">
-        <h2>Shopping Cart</h2>
-    </div>
     <div class="row"></div>
     <div class="">
         <?php if (empty($_SESSION['cart_items'])) { ?>
@@ -38,14 +26,16 @@ require "../includes/layout/frontHeader.php";
             <h2>Your Shopping cart is still empty</h2>
             <p>Before proceed to checkout you must add some products to your shopping cart <br> You will find a lot of
                 interisting products on our home page</p>
-            <input type="button" class="cart-empty-btn" value="Return to shop">
+            <a href="index.php">
+                <div class="cart-empty-btn">Return to shop</div>
+            </a>
         </div>
-
 
         <?php } ?>
         <?php if (isset($_SESSION['cart_items']) && count($_SESSION['cart_items']) > 0) { ?>
         <div class="shoppingcart-wrap">
             <div class="cart-wrap">
+                <h1 class="my-title">Shopping Cart</h1>
                 <table class="table">
                     <thead>
                         <tr>
@@ -57,17 +47,15 @@ require "../includes/layout/frontHeader.php";
                     </thead>
                     <tbody>
                         <?php
-            $totalCounter = 0;
-            $itemCounter = 0;
-            foreach ($_SESSION['cart_items'] as $key => $item) {
+                            $totalCounter = 0;
+                            $itemCounter = 0;
+                            foreach ($_SESSION['cart_items'] as $key => $item) {
 
-                $imgUrl = PRODUCT_IMG_URL . $item['product_img'];
+                            $imgUrl = PRODUCT_IMG_URL . $item['product_img'];
 
-                $total = $item['product_price'] * $item['qty'];
-                $totalCounter += $total;
-                $itemCounter += $item['qty'];
-
-
+                            $total = $item['product_price'] * $item['qty'];
+                            $totalCounter += $total;
+                            $itemCounter += $item['qty'];
                         ?>
                         <tr>
                             <td>
@@ -85,8 +73,8 @@ require "../includes/layout/frontHeader.php";
                                 <?php echo $item['product_price']; ?>
                             </td>
                             <td>
-                                <input type="number" name="" class="cart-qty-single" data-item-id="<?php echo $key ?>"
-                                    value="<?php echo $item['qty']; ?>" min="1" max="5">
+                                <input type="number" name="cart-qty" class="cart-qty-single" data-item-id="<?php echo $key ?>"
+                                    value="<?php echo $item['qty']; ?>" min="1" max="5" oninput="validity.valid||(value='');">
                             </td>
                             <td>
                                 <?php echo $total; ?>
@@ -95,8 +83,6 @@ require "../includes/layout/frontHeader.php";
                         <?php }
 
                         ?>
-
-
                         <tr class="cart-info">
                             <td><button class="clear-btn" id="emptyCart">Clear Cart</button></td>
                             <td></td>
@@ -104,10 +90,9 @@ require "../includes/layout/frontHeader.php";
                             <td>
                                 <strong>
                                     <?php
-            echo ($itemCounter == 1) ? $itemCounter . ' item' : $itemCounter . ' items'; ?>
+                                    echo ($itemCounter == 1) ? $itemCounter . ' item' : $itemCounter . ' items'; ?>
                                 </strong>
                             </td>
-                            <!-- <td><strong>DKK <?php echo $totalCounter; ?> ,-</strong></td> -->
                         </tr>
                         </tr>
                     </tbody>
