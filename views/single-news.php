@@ -31,8 +31,6 @@ $getAllNews = $query->fetchAll();
                     <?= $news['content'] ?>
                 </p>
             </div>
-
-
             <?php
             }
             ?>

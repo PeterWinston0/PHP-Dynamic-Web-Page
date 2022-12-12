@@ -72,6 +72,7 @@ $getComHours = $query->fetchAll();
 </footer>
 
 <script src="../assets/js/cart.js"></script>
+
 </body>
 
 </html>

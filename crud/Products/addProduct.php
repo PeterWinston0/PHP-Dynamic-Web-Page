@@ -54,11 +54,6 @@ if (isset($_POST['submit'])) {
                 }
                 // var_dump($catArray);
 
-
-
-
-
-
                 $productArray = $_POST['product'];
                 // var_dump($catArray);
                 foreach ($productArray as $product) {

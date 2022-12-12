@@ -1,5 +1,5 @@
 <?php
-require_once "../DB/dbCon.php";
+require_once "../db/dbCon.php";
 require "../includes/layout/backHeader.php";
 ?>
 
@@ -9,6 +9,7 @@ $query = $dbCon->prepare("SELECT * FROM company_hours");
 $query->execute();
 $getHours = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 
 <body>
     <div class="container">
