@@ -1,13 +1,13 @@
 <?php
-spl_autoload_register(
-    function ($class) {
-        include "../classes/" . $class . ".php";
-    }
-);
-$session = new SessionHandle();
-if ($session->confirm_logged_in()) {
-    $redirect = new Redirector("login.php");
-}
+// spl_autoload_register(
+//     function ($class) {
+//         include "../classes/" . $class . ".php";
+//     }
+// );
+// $session = new SessionHandle();
+// if ($session->confirm_logged_in()) {
+//     $redirect = new Redirector("login.php");
+// }
 // START FORM PROCESSING
 if (isset($_POST['submit'])) { // Form has been submitted.
     $newUser = new NewUser($_POST['user'], $_POST['pass']);

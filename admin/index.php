@@ -1,11 +1,11 @@
 <?php
-spl_autoload_register(function ($class)
-{include"../classes/".$class.".php";});
-//check of the user is logged in:
-$session = new SessionHandle();
-if ($session->confirm_logged_in()) {
-    $redirect = new Redirector("login.php");
-}
+// spl_autoload_register(function ($class)
+// {include"../classes/".$class.".php";});
+// //check of the user is logged in:
+// $session = new SessionHandle();
+// if ($session->confirm_logged_in()) {
+//     $redirect = new Redirector("login.php");
+// }
 
 $title = "Checkout Page";
 require "../includes/layout/backHeader.php";

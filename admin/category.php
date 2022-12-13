@@ -1,8 +1,9 @@
 <?php
-session_start();
 require_once "../db/dbCon.php";
 require "../includes/layout/backHeader.php";
 require_once "../controller/CategoryController.php";
+
+
 ?>
 
 <body>

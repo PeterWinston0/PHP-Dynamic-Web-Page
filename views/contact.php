@@ -2,7 +2,8 @@
 $title = "Contact Page";
 
 require_once('../includes/helpers.php');
-require "../_test/captcha.php";
+//require "../_test/captcha.php";
+require "../classes/captcha.php";
 require "../includes/layout/frontHeader.php";
 
 function validate($str)
@@ -16,14 +17,13 @@ $emailError = '';
 $phoneError = '';
 $messageError = '';
 
-if (isset($_POST['contact-mail'])) {
+if (isset($_POST['submit'])) {
 
     $firstname = validate($_POST['firstname']);
     $lastname = validate($_POST['lastname']);
     $email = validate($_POST['email']);
     $phone = validate($_POST['phone']);
     $message = validate($_POST['message']);
-
 
     if (!preg_match('/^[a-zA-Z0-9\s]+$/', $firstname)) {
         $firstnameError = 'Firstname can only contain letters, numbers and white spaces';
@@ -40,24 +40,33 @@ if (isset($_POST['contact-mail'])) {
     if (!preg_match('/^[a-zA-Z0-9\s]+$/', $message)) {
         $messageError = 'Message can only contain letters, numbers and white spaces';
     }
+    // (B) VERIFIED - DO SOMETHING
+    else if ($PHPCAP->verify($_POST["captcha"])) {
+        $result = "Congrats, CAPTCHA is correct.";
+        //print_r($_POST);
+        echo $result;
 
-    //get data from form  
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $message = $_POST['message'];
-    $to = "peterwinston1993@hotmail.com";
-    $subject = "Mail From website";
+        //get data from form  
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $message = $_POST['message'];
 
-    $txt = "FirstName = " . $firstname . "\r\n LastName = " . $lastname . "\r\n Email = " . $email . "\r\n Phone=" . $phone . "\r\n Message =" . $message;
-    $headers = "From: noreply@yoursite.com";
-    if ($email != NULL) {
-        mail($to, $subject, $txt, $headers);
+        $to = "peterwinston1993@hotmail.com";
+
+        $subject = "Mail From SneakerDreams";
+
+        $txt = "FirstName = " . $firstname . "\r\n LastName = " . $lastname . "\r\n Email = " . $email . "\r\n Phone=" . $phone . "\r\n Message =" . $message;
+        $headers = "From: contact@itspeterwinston.com";
+        if ($email != NULL) {
+            mail($to, $subject, $txt, $headers);
+        }
     }
-
-    //redirect
-    //header("Location:thankyou.html");
+    // (C) NOPE
+    else {
+        echo "CAPTCHA does not match!";
+    }
 }
 ?>
 
@@ -134,7 +143,6 @@ if (isset($_POST['contact-mail'])) {
                                 <div class="captcha">
                                     <p>Are you human?</p>
                                 </div>
-                                <!-- <label>Are you human?</label> -->
                                 <div class="captcha">
                                     <?php
                                     $PHPCAP->prime();
@@ -145,7 +153,7 @@ if (isset($_POST['contact-mail'])) {
                                     <input placeholder="Enter Captcha" name="captcha" type="text">
                                 </div>
 
-                                <div class="clearfix"><input type="submit" name="contact-mail" value="Send"></div>
+                                <div class="clearfix"><input type="submit" name="submit" value="Send"></div>
                             </div>
                         </form>
                     </div>
