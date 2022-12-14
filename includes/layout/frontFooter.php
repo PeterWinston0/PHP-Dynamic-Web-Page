@@ -31,8 +31,7 @@ $getComHours = $query->fetchAll();
                 <div class="">
                     <p>
                         <?php echo $hours['day'] ?>
-                        <?php echo $hours['open'] ?> -
-                        <?php echo $hours['close'] ?>
+                        <?php echo $hours['time'] ?>
                     </p>
                 </div>
             </div>

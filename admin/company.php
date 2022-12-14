@@ -1,12 +1,108 @@
 <?php
-require_once "../DB/dbcon.php";
+require_once "../db/dbcon.php";
+require_once "../db/config.php";
 require_once "../controller/CompanyController.php";
 require "../includes/layout/backHeader.php";
 
-$dbCon = dbCon($user, $pass);
+$upSucces = '';
+
+$titleErr = '';
+$descErr = '';
+$emailErr = '';
+$phoneErr = '';
+$imageErr = '';
+
+if (isset($_POST['com_id']) && isset($_POST['submit'])) {
+
+    $dbCon = dbCon($user, $pass);
+
+    $comID = $_POST['com_id'];
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+
+    $com_image = $_FILES["imagename"]["name"];
+    //var_dump($com_image);
+
+    function numbers_only($price)
+    {
+        return preg_match('/^([0-9]*)$/', $price);
+    }
+
+    //Title  
+    $title = trim($_POST['title']);
+    if (empty($title)) {
+        $titleErr = "Please enter product title";
+    } else if (!preg_match('/^[a-zA-Z0-9\s]+$/', $title)) {
+        $titleErr = "Title can only contain letters, numbers and white spaces";
+    } else {
+
+        //Description
+        $description = trim($_POST['description']);
+        if (empty($description)) {
+            $descErr = "Please enter product description";
+        }
+        // else if (!preg_match('/^[a-zA-Z0-9\s]+$/', $description)) {
+        //     $descErr = "Description can only contain letters, numbers and white spaces";
+        // }
+        else {
+
+            //Email   
+            $email = trim($_POST['email']);
+            if (empty($email)) {
+                $emailErr = "Please enter product title";
+            }
+            // else if (!preg_match('/^[a-zA-Z0-9\s]+$/', $email)) {
+            //     $emailErr = "Title can only contain letters, numbers and white spaces";
+            // } 
+            else {
+
+                //Phone
+                $phone = trim($_POST['phone']);
+                if (empty($phone)) {
+                    $phoneErr = "Please enter Phone Number";
+                }
+                // else if (!numbers_only($phone)) {
+                //     $phoneErr = "Phone Number can only contain numbers";
+                // } 
+                else {
+                    if ($_FILES['imagename']['name'] == '') {
+
+                        //No file selected
+                        $sql = "UPDATE company SET `title` = :com_title, `description` = :com_description, `email` = :com_email, `phone` = :com_phone WHERE id = :com_id";
+                        $query = $dbCon->prepare($sql);
+                        $query->bindParam(':com_id', $comID, PDO::PARAM_STR);
+                        $query->bindParam(':com_title', $title, PDO::PARAM_STR);
+                        $query->bindParam(':com_description', $description, PDO::PARAM_STR);
+                        $query->bindParam(':com_email', $email, PDO::PARAM_STR);
+                        $query->bindParam(':com_phone', $phone, PDO::PARAM_STR);
+                        $query->execute();
+
+                        $upSucces = 'status added';
+                    } else {
+                        move_uploaded_file($_FILES["imagename"]["tmp_name"], "../crud/company/img/" . $_FILES["imagename"]["name"]);
+
+                        $sql = "UPDATE company SET `title` = :com_title, `description` = :com_description, `email` = :com_email, `phone` = :com_phone, `image` = :com_image WHERE id = :com_id";
+                        $query = $dbCon->prepare($sql);
+                        $query->bindParam(':com_id', $comID, PDO::PARAM_STR);
+                        $query->bindParam(':com_title', $title, PDO::PARAM_STR);
+                        $query->bindParam(':com_description', $description, PDO::PARAM_STR);
+                        $query->bindParam(':com_email', $email, PDO::PARAM_STR);
+                        $query->bindParam(':com_phone', $phone, PDO::PARAM_STR);
+                        $query->bindParam(':com_image', $com_image, PDO::PARAM_STR);
+                        $query->execute();
+
+                        $upSucces = 'status added';
+                    }
+                }
+            }
+        }
+    }
+}
 
 if (isset($_GET['com_id'])) {
-
+    $dbCon = dbCon($user, $pass);
     $comID = $_GET['com_id'];
 
     $sql = "SELECT * FROM company WHERE id = :com_id";
@@ -31,8 +127,7 @@ if (isset($_GET['com_id'])) {
                 <h3>Editing Company Info "
                     <?php echo $result->title; ?>"
                 </h3>
-                <form class="" name="myProduct" enctype="multipart/form-data" method="post"
-                    action="../crud/company/updateCompany.php">
+                <form class="" name="myProduct" enctype="multipart/form-data" method="post">
                     <div class="column">
                         <div class="input-field">
                             <label class="w-100 p-1" for="title">Title</label>
@@ -41,8 +136,6 @@ if (isset($_GET['com_id'])) {
                         </div>
                         <div class="input-field">
                             <label class="w-100 p-1" for="description">Description</label>
-                            <!-- <input id="description" name="description" type="text" value="<?php echo $result->description; ?>"
-                            class="validate w-75 p-2" required="" aria-required="true"> -->
                             <textarea id="description" name="description" class="validate w-75 p-2"
                                 aria-required="true"><?php echo $result->description; ?></textarea>
 
@@ -92,12 +185,11 @@ if (isset($_GET['com_id'])) {
                     <th>title</th>
                     <th>Position</th>
                     <th>Edit</th>
-
                 </tr>
             </thead>
 
             <tbody>
-            <?php
+                <?php
     $company = new CompanyController;
     $result = $company->Slides();
     if ($result) {
@@ -116,12 +208,59 @@ if (isset($_GET['com_id'])) {
         </table>
     </div>
     <div class="content" id="page-3">
-        This is going to be the content for the third page. This block isn't even visible until jQuery and user action
-        makes it so. </div>
+        <div class='container'>
+
+            <table width='100%' border='0'>
+                <tr>
+                    <th width='10%'>S.no</th>
+                    <th width='40%'>day</th>
+                    <th width='40%'>time</th>
+                </tr>
+                <?php
+                $query = "select * from company_hours order by id";
+                $result = mysqli_query($con, $query);
+                $count = 1;
+                while ($row = mysqli_fetch_array($result)) {
+                    $id = $row['id'];
+                    $day = $row['day'];
+                    $time = $row['time'];
+                ?>
+                <tr>
+                    <td>
+                        <?php echo $count; ?>
+                    </td>
+                    <td>
+                        <div contentEditable='true' class='edit' id='day_<?php echo $id; ?>'>
+                            <?php echo $day; ?>
+                        </div>
+                    </td>
+                    <td>
+                        <div contentEditable='true' class='edit' id='time_<?php echo $id; ?>'>
+                            <?php echo $time; ?>
+                        </div>
+                    </td>
+                </tr>
+                <?php
+                $count++;
+                }
+                ?>
+            </table>
+
+        </div>
+    </div>
 </div>
 
 <?php } else {
     header("Location: company.php?status=0");
 } ?>
+
+<script src='../assets/js/editHours.js' type='text/javascript'></script>
+
+<!-- Script -->
+<script type="text/javascript">
+    CKEDITOR.replace('description', {
+        height: "200px"
+    }); 
+</script>
 
 <?php require "../includes/layout/backFooter.php"; ?>

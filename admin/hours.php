@@ -1,43 +1,51 @@
 <?php
-require_once "../db/dbCon.php";
+require_once "../db/config.php";
 require "../includes/layout/backHeader.php";
 ?>
 
-<?php
-$dbCon = dbCon($user, $pass);
-$query = $dbCon->prepare("SELECT * FROM company_hours");
-$query->execute();
-$getHours = $query->fetchAll(PDO::FETCH_ASSOC);
-?>
+<!-- <link href='style.css' rel='stylesheet' type='text/css'> -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 
 
-<body>
-    <div class="container">
-        <div class="column">
-            <div class="column">
-                <h2>Update Opening Hours</h2>
-                <form class="" name="product" method="post" action="addHours.php">
-                    <div class="column">
-                        <div class="input-field">
-                            <label class="w-100 p-1" for="">Add Opening Hours</label>
-                            <?php foreach ($getHours as $hours) {
-                                echo "<label class='w-100 p-1' for='title'>" . $hours['day'] . "</label>";
+<div class='container'>
 
-                                echo "<input id='title' type='text' class='validate w-75 p-2' name='open[]' aria-required='true' value='" . $hours['open'] . "'>";
+    <table width='100%' border='0'>
+        <tr>
+            <th width='10%'>S.no</th>
+            <th width='40%'>day</th>
+            <th width='40%'>time</th>
+        </tr>
+        <?php
+            $query = "select * from company_hours order by id";
+            $result = mysqli_query($con, $query);
+            $count = 1;
+            while ($row = mysqli_fetch_array($result)) {
+                $id = $row['id'];
+                $day = $row['day'];
+                $time = $row['time'];
+            ?>
+        <tr>
+            <td>
+                <?php echo $count; ?>
+            </td>
+            <td>
+                <div contentEditable='true' class='edit' id='day_<?php echo $id; ?>'>
+                    <?php echo $day; ?>
+                </div>
+            </td>
+            <td>
+                <div contentEditable='true' class='edit' id='time_<?php echo $id; ?>'>
+                    <?php echo $time; ?>
+                </div>
+            </td>
+        </tr>
+        <?php
+                $count++;
+            }
+            ?>
+    </table>
 
-                                echo "<input id='title' type='text' class='validate w-75 p-2' name='close[]' aria-required='true' value='" . $hours['close'] . "'>";
-                                echo "<input type='hidden' name='id' value='" . $hours['id'] . "'>";
-                            }
+</div>
 
-                            ?>
-                        </div>
-                    </div>
-                    <button class="btn btn-dark" type="submit" name="submit">Add Product
-                    </button>
-                </form>
-            </div>
-            <hr>
-
-        </div>
-    </div>
-    <?php require "../includes/layout/backFooter.php"; ?>
+<script src='../assets/js/editHours.js' type='text/javascript'></script>
+<?php require "../includes/layout/backFooter.php"; ?>
