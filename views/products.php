@@ -32,11 +32,10 @@ if ($_GET['cat_id']) {
     <?php
     foreach ($getAllCat as $cat) {
     ?>
-    <div class="page-title">
-        <h1>
+        <h2 class="block-title">
             <?php echo $cat['title'] ?>
-        </h1>
-    </div>
+        </h2>
+ 
     <?php
     }
     ?>

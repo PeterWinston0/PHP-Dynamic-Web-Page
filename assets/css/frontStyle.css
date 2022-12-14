@@ -9,10 +9,17 @@ body {
   margin: auto auto;
 }
 
-.my-title {
-  font-size: 40px;
-  text-transform: uppercase;
-  padding: 20px 0 20px 0;
+@media (max-width: 1024px) {
+  .page-container {
+    width: 100%;
+    margin: auto auto;
+  }
+}
+.custom-title {
+  width: 100%;
+  font-size: 28px;
+  padding: 2vh;
+  font-weight: 500;
 }
 
 .page-title {
@@ -21,27 +28,27 @@ body {
   text-transform: uppercase;
 }
 
-.myHead {
+.block-title {
   width: 100%;
   text-align: center;
-  font-size: 30px;
-  padding: 20px;
+  font-size: 32px;
+  padding: 2vh;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 
-.page-head {
-  width: 100%;
-  text-align: center;
-  margin-top: 5vh;
-  margin-bottom: 5vh;
+.mapouter {
+  position: relative;
+  text-align: right;
+  height: 100%;
+  height: 100%;
 }
-.page-head h3 {
-  text-align: center;
-  font-size: 24px;
-}
-.page-head p {
-  text-align: center;
-  width: 50%;
-  margin: auto auto;
+
+.gmap_canvas {
+  overflow: hidden;
+  background: none !important;
+  height: 100%;
+  height: 100%;
 }
 
 .gender-cat {
@@ -156,6 +163,7 @@ body {
 }
 
 .shoppingcart-wrap {
+  margin-top: 8vh;
   display: flex;
   justify-content: space-between;
   margin-bottom: 20vh;
@@ -179,6 +187,7 @@ body {
 }
 
 .cart-empty {
+  margin: 8vh 0 8vh 0;
   width: 100%;
   text-align: center;
   background-color: white;
@@ -227,6 +236,7 @@ body {
 }
 
 .checkout-container {
+  margin-top: 8vh;
   display: flex;
   justify-content: space-between;
 }
@@ -441,33 +451,51 @@ body {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  margin-bottom: 8vh;
 }
-.special-offer .page-head {
+.special-offer .special-head {
   background-color: white;
   padding-top: 25px;
   padding-bottom: 100px;
   margin-bottom: -25px;
+  width: 100%;
+  text-align: center;
+  margin-top: 5vh;
 }
-.special-offer .image {
+.special-offer .special-head h3 {
+  text-align: center;
+  font-size: 24px;
+}
+.special-offer .special-head p {
+  text-align: center;
+  width: 50%;
+  margin: auto auto;
+}
+.special-offer .special-link {
+  background-color: #034378;
+  color: black;
+  display: flex;
+}
+.special-offer .special-link .image {
   width: 50%;
   background-color: white;
 }
-.special-offer .image img {
+.special-offer .special-link .image img {
   width: 100%;
 }
-.special-offer .text {
+.special-offer .special-link .text {
   width: 50%;
   background-color: white;
 }
-.special-offer .text h2 {
+.special-offer .special-link .text h2 {
   font-size: 28px;
   width: 100%;
 }
-.special-offer .text h3 {
+.special-offer .special-link .text h3 {
   font-size: 22px;
   width: 100%;
 }
-.special-offer .text p {
+.special-offer .special-link .text p {
   font-size: 16px;
 }
 
@@ -482,7 +510,7 @@ body {
   text-decoration: none;
   color: black;
   box-sizing: border-box;
-  padding: 5px;
+  padding: 1vh;
   filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
 }
 .product-container .product img {
@@ -560,6 +588,18 @@ body {
   font-size: 16px;
 }
 
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
 body {
   box-sizing: border-box;
   font-family: "Karla", sans-serif;
@@ -578,7 +618,6 @@ nav {
   background-color: black;
   color: white;
 }
-
 nav h1 {
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -588,7 +627,6 @@ nav h1 a {
   text-decoration: none;
   color: white;
 }
-
 nav button {
   border: none;
   background: none;
@@ -682,7 +720,7 @@ nav ul li a {
 }
 
 .responsive-nav-active {
-  top: 15% !important;
+  top: 10% !important;
 }
 
 @media (min-width: 1024px) {
@@ -881,8 +919,7 @@ body {
 }
 
 .carousel {
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-bottom: 5vh;
 }
 .carousel .myLink {
   color: black;
@@ -1423,9 +1460,11 @@ footer .foot-wrap .copyright a {
 }
 
 .contact-container {
-  padding: 0 50px 70px;
+  margin: 8vh 0 8vh 0;
+  padding: 5vh;
   color: black;
-  padding-top: 8vh;
+  background-color: white;
+  border: 1px solid lightgrey;
 }
 
 .textcenter {
@@ -1454,11 +1493,6 @@ footer .foot-wrap .copyright a {
   font-size: 40px;
   color: black;
   font-weight: normal;
-}
-
-.section2 {
-  width: 1200px;
-  margin: 25px auto;
 }
 
 .section2 .col2 {
@@ -1497,7 +1531,7 @@ footer .foot-wrap .copyright a {
 .section2 .sec2contactform textarea {
   padding: 18px;
   border: 1px solid lightgray;
-  background: #f1f1f1;
+  background: white;
   margin: 7px 0;
 }
 

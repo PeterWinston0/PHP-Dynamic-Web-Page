@@ -38,7 +38,7 @@ require_once "../controller/CompanyController.php";
 </div>
 
 <div class="page-container">
-    <h2 class="myHead">Latest Drops</h2>
+    <h2 class="block-title">Latest Drops</h2>
     <div class="carousel">
         <div class="">
             <button type="button" class="slick-prev">Previous</button>
@@ -70,7 +70,7 @@ require_once "../controller/CompanyController.php";
 </div>
 
 <div class="page-container">
-    <h2 class="myHead">Popular Sneakers</h2>
+    <h2 class="block-title">Popular Sneakers</h2>
     <div class="carousel">
         <div class="">
             <button type="button" class="slick-prev">Previous</button>
@@ -134,18 +134,18 @@ require_once "../controller/CompanyController.php";
         if ($result) {
             foreach ($result as $row) {
         ?>
-        <!-- <a class="myLink" href="single-product.php?product=<?php echo $row['id'] ?>"></a> -->
-        <div class="page-head">
+        <div class="special-head">
             <h3>UGENS SNEAKER / <?= $row['title'] ?>
             </h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi
                 repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto
                 fuga praesentium optio, eaque rerum!</p>
         </div>
+        <a class="special-link" href="single-product.php?product=<?php echo $row['id'] ?>">
         <div class="image">
             <img class="" src="../crud/products/img/<?= $row['image'] ?>" alt="Card image cap">
         </div>
-
+        
         <div class="text">
             <h2>
                 <?= $row['title'] ?>
@@ -155,6 +155,7 @@ require_once "../controller/CompanyController.php";
                 <?= $row['description'] ?>
             </p>
         </div>
+        </a>
         <?php
             }
         }
@@ -221,7 +222,7 @@ require_once "../controller/CompanyController.php";
 <!-- NEWS -->
 <div class="page-container">
     <div class="row news">
-        <h2 class="myHead">Check out our blog for the latest news</h2>
+        <h2 class="block-title">Check out our blog for the latest news</h2>
         <?php
         $news = new NewsController;
         $result = $news->frontNews();

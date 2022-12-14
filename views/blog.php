@@ -7,8 +7,8 @@ require_once "../controller/NewsController.php";
 
 ?>
 <div class="page-container">
-    <div class="row news">
-        <h2 class="myHead">News</h2>
+<h2 class="block-title">News</h2>
+    <div class="news-container">
         <?php
         $news = new NewsController;
         $result = $news->all();

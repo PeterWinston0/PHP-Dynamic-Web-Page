@@ -23,31 +23,30 @@ if (isset($_GET['product']) && !empty($_GET['product']) && is_numeric($_GET['pro
     $error = '404! No record found';
 }
 
-//QUANTITY VALIDATETION RESET TO 1 
 $qtyError = '';
-$productQty = intval($_POST['product_qty']);
+// Validation for qty before submit
+if (isset($_POST['add_to_cart'])) {
 
-if (empty($productQty)) {
-    $qtyError = 'You need to fill in your amount';
-} else {
-    if (isset($_POST['add_to_cart']) && $_POST['add_to_cart'] == 'add to cart') {
-
+    if ($_POST['product_qty'] == '') {
+        $qtyError = "Please stop making things difficult for yourself";
+    }
+    else {
         $productID = intval($_POST['product_id']);
         $productQty = intval($_POST['product_qty']);
-
+    
         $sql = "SELECT * FROM product WHERE product.id =:productID";
-
+    
         $prepare = $db->prepare($sql);
-
+    
         $params = [
             ':productID' => $productID,
         ];
-
+    
         $prepare->execute($params);
         $fetchProduct = $prepare->fetch(PDO::FETCH_ASSOC);
-
+    
         $calculateTotalPrice = number_format($productQty * $fetchProduct['price'], 2);
-
+    
         $cartArray = [
             'product_id' => $productID,
             'qty' => $productQty,
@@ -56,7 +55,7 @@ if (empty($productQty)) {
             'total_price' => $calculateTotalPrice,
             'product_img' => $fetchProduct['image']
         ];
-
+    
         if (isset($_SESSION['cart_items']) && !empty($_SESSION['cart_items'])) {
             $productIDs = [];
             foreach ($_SESSION['cart_items'] as $cartKey => $cartItem) {
@@ -71,9 +70,9 @@ if (empty($productQty)) {
             if (!in_array($productID, $productIDs)) {
                 $_SESSION['cart_items'][] = $cartArray;
             }
-
+    
             $successMsg = true;
-
+    
         } else {
             $_SESSION['cart_items'][] = $cartArray;
             $successMsg = true;
@@ -101,7 +100,6 @@ require "../includes/layout/frontHeader.php";
         </div>
     </div>
     <?php } ?>
-
     <div class="single-product">
         <div class="image">
             <img src="<?php echo $imgUrl; ?>">
@@ -119,6 +117,7 @@ require "../includes/layout/frontHeader.php";
 
             <form class="form-inline" method="POST">
                 <div class="form-group mb-2">
+                    <p><?php echo $qtyError ?></p>
                     <input type="number" name="product_qty" id="productQty" class="form-control" placeholder="Quantity"
                         min="1" max="5" oninput="validity.valid||(value='');" value="1">
                     <input type="hidden" name="product_id" value="<?php echo $getProductData['id'] ?>">
@@ -135,7 +134,6 @@ require "../includes/layout/frontHeader.php";
             <?php echo $getProductData['description'] ?>
         </div>
     </div>
-
     <?php
     }
     ?>
@@ -154,9 +152,6 @@ require "../includes/layout/frontHeader.php";
                     <p class="text">
                         DKK <?= $relatedProduct['price'] ?>,-
                     </p>
-                    <!-- <p class="text">
-                        <?= $relatedProduct['description'] ?>
-                    </p> -->
                 </div>
             </a>
         </div>

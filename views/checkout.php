@@ -138,7 +138,7 @@ if (isset($_POST['submit'])) {
 require "../includes/layout/frontHeader.php";
 ?>
 <div class="page-container">
-    <div class="row checkout-container">
+    <div class="checkout-container">
         <div class="billing-block">
         <h1 class="my-title">Checkout</h1>
             <h4 class="mb-3">Shipping Information</h4>

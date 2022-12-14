@@ -22,7 +22,10 @@ if ($session->confirm_logged_in()) {
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/css/dataTables.bootstrap4.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.css" integrity="sha512-FA9cIbtlP61W0PRtX36P6CGRy0vZs0C2Uw26Q1cMmj3xwhftftymr0sj8/YeezDnRwL9wtWw8ZwtCiTDXlXGjQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  
+
     <!-- CK-EDITOR -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.18.0/ckeditor.js" integrity="sha512-woYV6V3QV/oH8txWu19WqPPEtGu+dXM87N9YXP6ocsbCAH1Au9WDZ15cnk62n6/tVOmOo0rIYwx05raKdA4qyQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- JQUERY -->
@@ -54,40 +57,40 @@ if ($session->confirm_logged_in()) {
                         <span class="nav-link-text">Products</span>
                     </a>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Category">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Categories">
                     <a class="nav-link" href="category.php">
-                        <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Category</span>
+                    <i class="fa-solid fa-icons"></i>
+                        <span class="nav-link-text">Categories</span>
                     </a>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Brand">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Brands">
                     <a class="nav-link" href="brand.php">
-                        <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Brand</span>
+                    <i class="fa-regular fa-copyright"></i>
+                        <span class="nav-link-text">Brands</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="News">
                     <a class="nav-link" href="news.php">
-                        <i class="fa fa-fw fa-table"></i>
+                    <i class="fa-solid fa-paper-plane"></i>
                         <span class="nav-link-text">News</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Company">
                     <a class="nav-link" href="company.php?com_id=1">
-                        <i class="fa fa-fw fa-table"></i>
+                    <i class="fa-solid fa-shop"></i>
                         <span class="nav-link-text">Company</span>
                     </a>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="User">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
                     <a class="nav-link" href="newUser.php">
                         <i class="fa fa-fw fa-users"></i>
-                        <span class="nav-link-text">User</span>
+                        <span class="nav-link-text">Users</span>
                     </a>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="User">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Order Overview">
                     <a class="nav-link" href="orderOverview.php">
-                        <i class="fa fa-fw fa-users"></i>
+                    <i class="fa-solid fa-truck"></i>
                         <span class="nav-link-text">Order Overview</span>
                     </a>
                 </li>

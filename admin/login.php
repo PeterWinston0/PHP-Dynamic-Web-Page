@@ -18,15 +18,10 @@ if (isset($_POST['submit'])) { // Form has been submitted.
     $msg = $login->message;
 }
 ?>
-
 <html>
-
 <head>
-    <meta http-equiv="Content-Type" content="text/html" />
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-
     <style>
     body {
         background: #222D32;
@@ -159,14 +154,7 @@ if (isset($_POST['submit'])) { // Form has been submitted.
     }
     </style>
 </head>
-
 <body>
-
-    <!-- <?php
-      if (!empty($msg)) {echo "<p>" . $msg . "</p>";}
-    ?> -->
-
-    <a href="../views/index.php">Frontend</a>
     <form action="" method="post">
         <div class="container">
             <div class="row">
@@ -211,5 +199,4 @@ if (isset($_POST['submit'])) { // Form has been submitted.
             </div>
     </form>
 </body>
-
 </html>

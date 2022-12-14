@@ -14,11 +14,21 @@ if (isset($_GET['action'], $_GET['item']) && $_GET['action'] == 'remove') {
     exit();
 }
 
+// $qtyError = '';
+// // Validation for qty before submit
+// if (isset($_POST['submit-checkout'])) {
+//     if ($_POST['cart-qty'] == '') {
+//         $qtyError = "Please stop making being silly";
+//     } else {
+//         header('location:checkout.php');
+//         exit();
+//     }
+// }
+
 require "../includes/layout/frontHeader.php";
 
 ?>
 <div class="page-container">
-    <div class="row"></div>
     <div class="">
         <?php if (empty($_SESSION['cart_items'])) { ?>
         <div class="cart-empty">
@@ -51,11 +61,11 @@ require "../includes/layout/frontHeader.php";
                             $itemCounter = 0;
                             foreach ($_SESSION['cart_items'] as $key => $item) {
 
-                            $imgUrl = PRODUCT_IMG_URL . $item['product_img'];
+                                $imgUrl = PRODUCT_IMG_URL . $item['product_img'];
 
-                            $total = $item['product_price'] * $item['qty'];
-                            $totalCounter += $total;
-                            $itemCounter += $item['qty'];
+                                $total = $item['product_price'] * $item['qty'];
+                                $totalCounter += $total;
+                                $itemCounter += $item['qty'];
                         ?>
                         <tr>
                             <td>
@@ -72,9 +82,14 @@ require "../includes/layout/frontHeader.php";
                                 DKK
                                 <?php echo $item['product_price']; ?>
                             </td>
+
                             <td>
-                                <input type="number" name="cart-qty" class="cart-qty-single" data-item-id="<?php echo $key ?>"
-                                    value="<?php echo $item['qty']; ?>" min="1" max="5" oninput="validity.valid||(value='');">
+                                <!-- <p>
+                                    <?php echo $qtyError ?>
+                                </p> -->
+                                <input type="number" name="cart-qty" class="cart-qty-single"
+                                    data-item-id="<?php echo $key ?>" value="<?php echo $item['qty']; ?>" min="1"
+                                    max="5" oninput="validity.valid||(value='');">
                             </td>
                             <td>
                                 <?php echo $total; ?>
@@ -90,10 +105,10 @@ require "../includes/layout/frontHeader.php";
                             <td>
                                 <strong>
                                     <?php
-                                    echo ($itemCounter == 1) ? $itemCounter . ' item' : $itemCounter . ' items'; ?>
+                                        echo ($itemCounter == 1) ? $itemCounter . ' item' : $itemCounter . ' items'; 
+                                    ?>
                                 </strong>
                             </td>
-                        </tr>
                         </tr>
                     </tbody>
                 </table>
@@ -104,20 +119,19 @@ require "../includes/layout/frontHeader.php";
                     </strong></td> <br>
                 <td><strong><span>Shipping</span> DKK 35 ,-</strong></td>
                 <div class="row">
-                    <div class="">
-                        <a href="checkout.php">
-                            <button class="checkout-btn">Checkout</button>
-                        </a>
-                    </div>
+                    <a href="checkout">
+                        <button type="submit" name="submit-checkout" class="checkout-btn">Checkout</button>
+                    </a>
                 </div>
             </div>
         </div>
+
         <?php } ?>
     </div>
 </div>
 
-<div class="block">
-    <h2 class="myHead">People also looked at these products</h2>
+<div class="page-container">
+    <h2 class="custom-title">People also looked at these products</h2>
     <div class="carousel">
         <div class="">
             <button type="button" class="slick-prev">Previous</button>
@@ -149,14 +163,14 @@ require "../includes/layout/frontHeader.php";
 </div>
 
 <script>
-    $(document).ready(function () {
-        $(".car1").slick({
-            infinite: false,
-            slidesToShow: 4,
-            slidesToScroll: 3,
-            appendArrows: $(".car1"),
-            dots: false,
-            responsive: [{
+$(document).ready(function() {
+    $(".car1").slick({
+        infinite: false,
+        slidesToShow: 4,
+        slidesToScroll: 3,
+        appendArrows: $(".car1"),
+        dots: false,
+        responsive: [{
                 breakpoint: 1024,
                 settings: {
                     slidesToShow: 4,
@@ -177,9 +191,9 @@ require "../includes/layout/frontHeader.php";
                     slidesToScroll: 1,
                 },
             },
-            ],
-        });
+        ],
     });
+});
 </script>
 
 <?php require "../includes/layout/frontFooter.php"; ?>

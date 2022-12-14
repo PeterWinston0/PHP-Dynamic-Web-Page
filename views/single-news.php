@@ -2,6 +2,7 @@
 session_start();
 $title = "Products Page";
 require "../includes/layout/frontHeader.php";
+require_once("../db/dbcon.php");
 
 $news_id = (int) $_GET['id'];
 
@@ -16,22 +17,25 @@ $getAllNews = $query->fetchAll();
 ?>
 
 <div class="page-container">
-    <div class="news-container" style="">
+    <div class="news-container">
         <div class="single-news">
-            <?php
-            foreach ($getNews as $news) {
-            ?>
-
-            <img class="" src="../crud/news/img/<?= $news['image'] ?>" alt="Card image cap">
+        <?php
+        $news = new NewsController;
+        $result = $news->all();
+        if ($result) {
+            foreach ($result as $row) {
+        ?>
+            <img class="" src="../crud/news/img/<?= $row['image'] ?>" alt="Card image cap">
             <div class="body">
                 <h2 class="title">
-                    <?= $news['title'] ?>
+                    <?= $row['title'] ?>
                 </h2>
                 <p class="text">
-                    <?= $news['content'] ?>
+                    <?= $row['content'] ?>
                 </p>
             </div>
             <?php
+            }
             }
             ?>
 

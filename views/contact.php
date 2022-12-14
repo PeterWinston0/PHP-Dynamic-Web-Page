@@ -16,6 +16,7 @@ $lastnameError = '';
 $emailError = '';
 $phoneError = '';
 $messageError = '';
+$captchaError = '';
 
 if (isset($_POST['submit'])) {
 
@@ -65,21 +66,19 @@ if (isset($_POST['submit'])) {
     }
     // (C) NOPE
     else {
-        echo "CAPTCHA does not match!";
+        $captchaError = "CAPTCHA does not match!";
     }
 }
 ?>
-
 <div class="page-container">
+<i class="fa-solid fa-truck"></i>
     <div class="contact-container">
         <div class="innerwrap">
-
             <section class="section1 clearfix">
                 <div class="textcenter">
                     <h1>Feel Free To Contact Us</h1>
                 </div>
             </section>
-
             <section class="section2 clearfix">
                 <div class="col2 column1 first">
                     <script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script>
@@ -87,31 +86,14 @@ if (isset($_POST['submit'])) {
                         <div class="mapouter">
                             <div class="gmap_canvas"><iframe width="100%" height="100%" id="gmap_canvas"
                                     src="https://maps.google.com/maps?q=Spangbjerg%20kirkevej%20123&t=k&z=13&ie=UTF8&iwloc=&output=embed"
-                                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a
-                                    href="https://123movies-to.org">123movies</a><br>
-                                <style>
-                                    .mapouter {
-                                        position: relative;
-                                        text-align: right;
-                                        height: 100%;
-                                        height: 100%;
-                                    }
-                                </style><a href="https://www.embedgooglemap.net">embedgooglemap.net</a>
-                                <style>
-                                    .gmap_canvas {
-                                        overflow: hidden;
-                                        background: none !important;
-                                        height: 100%;
-                                        height: 100%;
-                                    }
-                                </style>
+                                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col2 column2 last">
                     <div class="sec2contactform">
-                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                             <div class="clearfix">
                                 <p>
                                     <?php echo $firstnameError ?>
@@ -142,6 +124,9 @@ if (isset($_POST['submit'])) {
                                 <!-- (B) CAPTCHA HERE -->
                                 <div class="captcha">
                                     <p>Are you human?</p>
+                                    <p>
+                                        <?php echo $captchaError ?>
+                                    </p>
                                 </div>
                                 <div class="captcha">
                                     <?php
@@ -157,7 +142,6 @@ if (isset($_POST['submit'])) {
                             </div>
                         </form>
                     </div>
-
                 </div>
             </section>
         </div>
