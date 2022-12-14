@@ -1,16 +1,14 @@
 <!-- <?php echo $_SERVER['REQUEST_URI']; ?> does not exist, sorry.<br>
 <?php
-if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])){
-$refuri = parse_url($_SERVER['HTTP_REFERER']); // use the parse_url() function to create an array containing information about the domain
-if($refuri['host'] == "localhost"){
-echo "You should email me and tell me I have a dead link on this site.";
-}
-else{
-echo "You should email someone over at " . $refuri['host'] . " and let them know they have a dead link to this site.";
-}
-}
-else{
-echo "If you got here from Angola, you took a wrong turn at Catumbela. And if you got here by typing randomly in the address bar, stop doing that. You're filling my error logs with unnecessary junk.";
+if (isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])) {
+	$refuri = parse_url($_SERVER['HTTP_REFERER']); // use the parse_url() function to create an array containing information about the domain
+	if ($refuri['host'] == "localhost") {
+		echo "You should email me and tell me I have a dead link on this site.";
+	} else {
+		echo "You should email someone over at " . $refuri['host'] . " and let them know they have a dead link to this site.";
+	}
+} else {
+	echo "If you got here from Angola, you took a wrong turn at Catumbela. And if you got here by typing randomly in the address bar, stop doing that. You're filling my error logs with unnecessary junk.";
 }
 ?> -->
 
@@ -21,21 +19,21 @@ $error = $_SERVER["REDIRECT_STATUS"];
 $error_title = '';
 $error_message = '';
 
-if($error == 404) {
+if ($error == 404) {
 	$error_title = 'Page not found';
-    $error_message = 'The page you were looking for could not be found.';
+	$error_message = 'The page you were looking for could not be found.';
 }
 
 ?>
 
-<?php 
+<?php
 session_start();
 //$title = "Home Page";
 require "../includes/layout/frontHeader.php";
 ?>
 
 <style>
-/* *{
+	/* *{
     transition: all 0.6s;
 }
 
@@ -79,8 +77,12 @@ body{
     	</div>
 </div> -->
 
-<h1><?php echo $error_title; ?></h1>
-<h5><?php echo $error_message; ?></h5>
+<h1>
+	<?php echo $error_title; ?>
+</h1>
+<h5>
+	<?php echo $error_message; ?>
+</h5>
 
 
-<?php require "../includes/layout/frontFooter.php";?>
+<?php require "../includes/layout/frontFooter.php"; ?>

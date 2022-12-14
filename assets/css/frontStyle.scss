@@ -490,6 +490,12 @@ body {
   border: none;
 }
 
+.single-product-wrap {
+  background-color: white;
+  margin: 8vh 0 8vh 0;
+  border: 1px solid lightgray;
+}
+
 .single-product {
   display: flex;
 
@@ -1080,6 +1086,18 @@ body {
   margin-left: auto;
   margin-right: auto;
   filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
+
+  .img-wrap {
+    height: 160px;
+    width: 100%;
+    background-color: #034378;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
 }
 
 .slick-dots {

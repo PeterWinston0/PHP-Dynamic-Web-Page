@@ -2,7 +2,6 @@
 $title = "Contact Page";
 
 require_once('../includes/helpers.php');
-//require "../_test/captcha.php";
 require "../classes/captcha.php";
 require "../includes/layout/frontHeader.php";
 
@@ -71,7 +70,6 @@ if (isset($_POST['submit'])) {
 }
 ?>
 <div class="page-container">
-<i class="fa-solid fa-truck"></i>
     <div class="contact-container">
         <div class="innerwrap">
             <section class="section1 clearfix">

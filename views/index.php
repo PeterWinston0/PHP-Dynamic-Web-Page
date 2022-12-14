@@ -83,7 +83,9 @@ require_once "../controller/CompanyController.php";
                 ?>
                 <a class="myLink" href="single-product.php?product=<?php echo $row['id'] ?>">
                     <div class="carousel-item">
-                        <img src="../crud/products/img/<?= $row['image'] ?>" style="width: 100%"></img>
+                        <div class="img-wrap">
+                            <img src="../crud/products/img/<?= $row['image'] ?>" style="width: 100%"></img>
+                        </div>
                         <p>
                             <?= $row['title'] ?>
                         </p>

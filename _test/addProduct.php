@@ -1,6 +1,5 @@
 <?php require_once "../../DB/dbcon.php";
 if (isset($_POST['submit'])) {
-
     $title = $_POST['title'];
     $description = $_POST['description'];
     $price = $_POST['price'];
