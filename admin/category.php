@@ -4,9 +4,9 @@ require "../includes/layout/backHeader.php";
 require_once "../controller/CategoryController.php";
 
 $titleErr = '';
+$imageErr = '';
 
 if (isset($_POST['submit'])) {
-
     $title = $_POST['title'];
 
     //Title   
@@ -16,6 +16,7 @@ if (isset($_POST['submit'])) {
     } else if (!preg_match('/^[a-zA-Z0-9\s]+$/', $title)) {
         $titleErr = "Title can only contain letters, numbers and white spaces";
     } else {
+
         //Image // NEEDS EXTRA WORK
         if ($_FILES["file"]["error"] > 0) {
             $imageErr = "Please upload an image";
@@ -26,9 +27,11 @@ if (isset($_POST['submit'])) {
                 (($_FILES['file']['type'] == "image/gif") ||
                     ($_FILES['file']['type'] == "image/jpeg") ||
                     ($_FILES['file']['type'] == "image/png") ||
+                    ($_FILES['file']['type'] == "image/webp") ||
                     ($_FILES['file']['type'] == "image/pjpeg")) &&
                 ($_FILES['file']['size'] < 10000000)
             ) {
+
                 if ($_FILES['file']['error'] > 0) {
                     echo "error code: " . $_FILES['file']['error'];
                 } else {
@@ -51,6 +54,17 @@ if (isset($_POST['submit'])) {
         }
     }
 }
+
+if (isset($_GET['delete'])) {
+    $categoryID = $_GET['delete'];
+    $dbCon = dbCon($user, $pass);
+    $query = $dbCon->prepare("DELETE FROM category WHERE cat_id = $categoryID");
+    $query->execute();
+
+    //header("Location: ../../admin/category.php?status=deleted&id=$categoryID");
+}else{
+    //header("Location: ../../admin/category.php?status=0");
+}
 ?>
 
 <div class="container">
@@ -62,11 +76,12 @@ if (isset($_POST['submit'])) {
                     <label for="title">
                         <?php echo $titleErr ?>
                     </label>
-                    <input id="title" name="title" type="text" class="validate" required="" aria-required="true">
+                    <input id="title" name="title" type="text" class="validate" aria-required="true">
                     <label for="title">title</label>
                 </div>
             </div>
             <div class="input-field col s6">
+            <?php echo $titleErr ?>
                 <input type='file' name='file' />
             </div>
             <button class="btn waves-effect waves-light" type="submit" name="submit">Add
@@ -99,7 +114,7 @@ if (isset($_POST['submit'])) {
                             echo "<td>";
                             echo "</td>";
                             echo '<td><a href="editCategory.php?cat_id=' . $row['cat_id'] . '" class="waves-effect waves-light btn" ">Edit</a></td>';
-                            echo '<td><a href="../crud/category/deleteCategory.php?id=' . $row['cat_id'] . '" class="waves-effect waves-light btn red" onclick="return confirm(\'Delete! are you sure?\')">Delete</a></td>';
+                            echo '<td><a href="category.php?delete=' . $row['cat_id'] . '" class="waves-effect waves-light btn red" onclick="return confirm(\'Delete! are you sure?\')">Delete</a></td>';
                             echo "</tr>";
                         }
                     }

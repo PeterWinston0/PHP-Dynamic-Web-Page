@@ -6,7 +6,6 @@ require_once "../includes/layout/backHeader.php";
 $titleErr = '';
 
 if (isset($_POST['submit'])) {
-
     $title = $_POST['title'];
 
     //Title   
@@ -50,6 +49,18 @@ if (isset($_POST['submit'])) {
             }
         }
     }
+}
+
+
+if (isset($_GET['delete'])) {
+    $brandID = $_GET['delete'];
+    $dbCon = dbCon($user, $pass);
+    $query = $dbCon->prepare("DELETE FROM brand WHERE brand_id = $brandID");
+    $query->execute();
+
+    //header("Location: ../../admin/brand.php?status=deleted&id=$brandID");
+}else{
+    //header("Location: ../../admin/brand.php?status=0");
 }
 ?>
 
@@ -101,7 +112,7 @@ if (isset($_POST['submit'])) {
                                 echo "<td>";
                                 echo "</td>";
                                 echo '<td><a href="editBrand.php?id=' . $row['brand_id'] . '" class="waves-effect waves-light btn" ">Edit</a></td>';
-                                echo '<td><a href="../crud/brand/deleteBrand.php?id=' . $row['brand_id'] . '" class="waves-effect waves-light btn red" onclick="return confirm(\'Delete! are you sure?\')">Delete</a></td>';
+                                echo '<td><a href="brand.php?delete=' . $row['brand_id'] . '" class="waves-effect waves-light btn red" onclick="return confirm(\'Delete! are you sure?\')">Delete</a></td>';
                                 echo "</tr>";
                             }
                         }

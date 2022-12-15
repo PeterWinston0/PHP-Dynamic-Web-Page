@@ -1,5 +1,5 @@
 <?php
-require_once "../DB/dbcon.php";
+require_once "../db/dbcon.php";
 require "../includes/layout/backHeader.php";
 require_once "../controller/NewsController.php";
 
@@ -13,7 +13,6 @@ if (isset($_POST['submit'])) {
 
     $title = $_POST['title'];
     $content = $_POST['content'];
-
 
     $title = trim($_POST['title']);
     if (empty($title)) {
@@ -59,6 +58,18 @@ if (isset($_POST['submit'])) {
         }
     }
 }
+
+
+if (isset($_GET['delete'])) {
+    $newsID = $_GET['delete'];
+    $dbCon = dbCon($user, $pass);
+    $query = $dbCon->prepare("DELETE FROM news WHERE id=$newsID");
+    $query->execute();
+
+    //header("Location: ../../admin/news.php?status=deleted&id=$newsID");
+}else{
+    //header("Location: ../../admin/news.php?status=0");
+}
 ?>
 
 <div class="container">
@@ -69,17 +80,12 @@ if (isset($_POST['submit'])) {
     <div class="content active" id="page-1">
         <div class="column">
             <h3>Add New Article</h3>
-            <form class="col s12" name="news" method="post" enctype="multipart/form-data"
-                action="../crud/news/addNews.php">
+            <form class="col s12" name="news" method="post" enctype="multipart/form-data">
                 <div class="column">
                     <div class="input-field">
                         <label class="w-100 p-1" for="title">title</label>
                         <input id="title" name="title" type="text" class="validate w-75 p-2" required=""
                             aria-required="true">
-                    </div>
-                    <div class="input-field">
-                        <label class="w-100 p-1" for="rubric">rubric</label>
-                        <input id="rubric" name="rubric" type="text" class="validate w-75 p-2" aria-required="true">
                     </div>
                     <div class="input-field">
                         <label class="w-100 p-1" for="content">content</label>
@@ -105,7 +111,6 @@ if (isset($_POST['submit'])) {
                 <thead>
                     <tr>
                         <th>Title</th>
-                        <th>Rubric</th>
                         <th>Content</th>
                         <th>Image</th>
                         <th>Edit</th>
@@ -120,15 +125,14 @@ if (isset($_POST['submit'])) {
                         foreach ($result as $row) {
                             echo "<tr>";
                             echo "<td>" . $row['title'] . "</td>";
-                            echo "<td>" . $row['rubric'] . "</td>";
                             echo "<td>" . substr($row['content'], 0, 150) . "</td>";
                             echo "<td>" . "<img src='../crud/news/img/" . $row['image'] . "' width='120' height='120' alt='images'>" . "</td>";
 
                             echo "<td>";
 
                             echo "</td>";
-                            echo '<td><a href="../crud/news/editNews.php?id=' . $row['id'] . '" class="waves-effect waves-light btn" ">Edit</a></td>';
-                            echo '<td><a href="../crud/news/deleteNews.php?id=' . $row['id'] . '" class="waves-effect waves-light btn red" onclick="return confirm(\'Delete! are you sure?\')">Delete</a></td>';
+                            echo '<td><a href="editNews.php?id=' . $row['id'] . '" class="waves-effect waves-light btn" ">Edit</a></td>';
+                            echo '<td><a href="news.php?delete=' . $row['id'] . '" class="waves-effect waves-light btn red" onclick="return confirm(\'Delete! are you sure?\')">Delete</a></td>';
                             echo "</tr>";
                         }
                     }

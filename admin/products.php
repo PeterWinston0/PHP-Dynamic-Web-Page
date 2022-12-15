@@ -60,6 +60,7 @@ if (isset($_POST['submit'])) {
             } else if (!numbers_only($price)) {
                 $priceErr = "Price can only contain numbers";
             } else {
+                
                 //Image // NEEDS EXTRA WORK
                 if ($_FILES["file"]["error"] > 0) {
                     $imageErr = "Please upload an image";
@@ -125,6 +126,18 @@ if (isset($_POST['submit'])) {
             }
         }
     }
+}
+
+
+if (isset($_GET['delete'])) {
+    $productID = $_GET['delete'];
+    $dbCon = dbCon($user, $pass);
+    $query = $dbCon->prepare("DELETE FROM product WHERE id=$productID");
+    $query->execute();
+
+    //header("Location: ../../admin/products.php?status=deleted&id=$productID");
+}else{
+    //header("Location: ../../admin/products.php?status=0");
 }
 ?>
 
@@ -253,7 +266,7 @@ if (isset($_POST['submit'])) {
 
                                 echo "</td>";
                                 echo '<td><a href="editProduct.php?id=' . $row['id'] . '" class="waves-effect waves-light btn" ">Edit</a></td>';
-                                echo '<td><a href="../crud/products/deleteProduct.php?id=' . $row['id'] . '" class="waves-effect waves-light btn red" onclick="return confirm(\'Delete! are you sure?\')">Delete</a></td>';
+                                echo '<td><a href="products.php?delete=' . $row['id'] . '" class="waves-effect waves-light btn red" onclick="return confirm(\'Delete! are you sure?\')">Delete</a></td>';
                                 echo "</tr>";
                             }
                         }

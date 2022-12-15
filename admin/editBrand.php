@@ -2,6 +2,48 @@
 
 $imgid = intval($_GET['id']);
 
+//SAVE EDIT DATA
+if (isset($_POST['id']) && isset($_POST['submit'])) {
+
+    $dbCon = dbCon($user, $pass);
+
+    $brandID = $_POST['id'];
+    $title = $_POST['title'];
+    $brand_image = $_FILES["imagename"]["name"];
+
+    if ($_FILES['imagename']['name'] == '') {
+        //No file selected
+
+        $sql = "UPDATE brand SET `title` = :title WHERE brand_id = :brand_id";
+        $query = $dbCon->prepare($sql);
+        $query->bindParam(':brand_id', $brandID, PDO::PARAM_STR);
+        $query->bindParam(':title', $title, PDO::PARAM_STR);
+        $query->execute();
+
+        header("Location: ../../admin/brand.php?status=updated&id=$brandID");
+
+    } else {
+
+        move_uploaded_file($_FILES["imagename"]["tmp_name"], "../../img/" . $_FILES["imagename"]["name"]);
+
+        $sql = "UPDATE brand SET `title` = :brand_title, `image` = :brand_image WHERE brand_id = :brand_id";
+        $query = $dbCon->prepare($sql);
+        $query->bindParam(':brand_id', $brandID, PDO::PARAM_STR);
+        $query->bindParam(':brand_title', $title, PDO::PARAM_STR);
+        $query->bindParam(':brand_image', $brand_image, PDO::PARAM_STR);
+        $query->execute();
+
+        //header("Location: ../../admin/brand.php?status=updated&id=$brandID");
+    }
+
+    //header("Location: ../../admin/category.php?status=updated&id=$catID");
+
+} else {
+    //header("Location: ../../admin/brand.php?status=0");
+}
+
+
+//LOAD EDIT DATA
 if (isset($_GET['id'])) {
 
     $brandID = $_GET['id'];
@@ -22,8 +64,7 @@ if (isset($_GET['id'])) {
     <h3>Editing Brand "
         <?php echo $result->title; ?>"
     </h3>
-    <form class="col s12" name="myBrand" enctype="multipart/form-data" method="post"
-        action="../crud/brand/updateBrand.php">
+    <form class="col s12" name="myBrand" enctype="multipart/form-data" method="post">
         <div class="row">
             <div class="input-field col s12">
                 <input id="title" name="title" type="text" value="<?php echo $result->title; ?>" class="validate"
@@ -33,7 +74,7 @@ if (isset($_GET['id'])) {
         </div>
 
         <div class="form-group ml-4">
-            <label for="focusedinput" class=" control-label">Current Image </label>
+            <label for="focusedinput" class="control-label">Current Image</label>
             <div class="">
                 <img src="../crud/brand/img/<?php echo $result->image; ?>" width="200">
             </div>
@@ -53,7 +94,6 @@ if (isset($_GET['id'])) {
         <button class="btn waves-effect waves-light" type="submit" name="submit">Update
         </button>
     </form>
-</div>
 </div>
 
 <?php } else {

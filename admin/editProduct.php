@@ -1,27 +1,85 @@
-<?php require_once "../db/dbcon.php";
+<?php 
+require_once "../db/dbcon.php";
+require_once "../controller/ProductsController.php";
+require_once "../controller/BrandController.php";
+require_once "../controller/CategoryController.php";
 
+
+if (isset($_POST['id']) && isset($_POST['submit'])) {
+    echo "sdklcs";
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $price = $_POST['price'];
+    $productID = $_POST['id'];
+    $product_image = $_FILES["imagename"]["name"];
+
+    $dbCon = dbCon($user, $pass);
+
+    //UPDATE IMAGE
+    move_uploaded_file($_FILES["imagename"]["tmp_name"], "../../crud/products/img/" . $_FILES["imagename"]["name"]);
+         
+    $sql = "UPDATE product SET `image` = :product_image WHERE id = :product_id";
+    $query = $dbCon->prepare($sql);
+    $query->bindParam(':product_id', $productID, PDO::PARAM_STR);
+    $query->bindParam(':product_image', $product_image, PDO::PARAM_STR);
+    $query->execute();
+
+    //UPDATE NEW CONTENT
+    $query = $dbCon->prepare("UPDATE product SET `title`='$title', `description`='$description', `price`='$price' WHERE id=$productID");
+    $query->execute();
+
+    //DELETE CATEGORIES
+    $query = $dbCon->prepare("DELETE FROM product_categories WHERE fk_product = $productID");
+    $query->execute();
+
+    //INSERT NEW CATEGORIES
+    $catArray = $_POST['category'];
+    foreach ($catArray as $category) {
+         $sql28 = "INSERT INTO product_categories(`fk_product`, `fk_category`) VALUES ('$productID', '$category')";
+         $queryCat = $dbCon->prepare($sql28);
+         $queryCat->execute();
+    }
+
+    //DELETE BRANDS
+    $query = $dbCon->prepare("DELETE FROM product_brands WHERE fk_product = $productID");
+    $query->execute();
+
+     //INSERT NEW BRANDS
+     $brandArray = $_POST['brand'];
+     foreach ($brandArray as $brand) {
+          $sql30 = "INSERT INTO product_brands(`fk_product`, `fk_brand`) VALUES ('$productID', '$brand')";
+          $queryBrand = $dbCon->prepare($sql30);
+          $queryBrand->execute();
+     }
+
+     //DELETE PRODUCTS
+    $query = $dbCon->prepare("DELETE FROM product_related WHERE product_id = $productID");
+    $query->execute();
+
+     //INSERT NEW PRODUCTS
+     $productArray = $_POST['product'];
+     foreach ($productArray as $product) {
+          $sql32 = "INSERT INTO product_related(`product_id`, `fk_product`) VALUES ('$productID', '$product')";
+          $queryProduct = $dbCon->prepare($sql32);
+          $queryProduct->execute();
+     }
+
+    //header("Location: ../../admin/editProduct.php?status=updated&id=$productID");
+
+} else {
+    //header("Location: ../../admin/products.php?status=0");
+}
+
+//IMG ID
 $imgid = intval($_GET['id']);
 
 if (isset($_GET['id'])) {
-
     $productID = $_GET['id'];
 
     $dbCon = dbCon($user, $pass);
     $query = $dbCon->prepare("SELECT * FROM product WHERE id = $productID");
     $query->execute();
     $getProd = $query->fetchAll();
-
-    $queryCat = $dbCon->prepare("SELECT * FROM category");
-    $queryCat->execute();
-    $getCat = $queryCat->fetchAll();
-
-    $queryBrand = $dbCon->prepare("SELECT * FROM brand");
-    $queryBrand->execute();
-    $getBrand = $queryBrand->fetchAll();
-
-    $query = $dbCon->prepare("SELECT * FROM product ORDER BY id DESC");
-    $query->execute();
-    $getProducts = $query->fetchAll();
 
     $query = $dbCon->prepare("SELECT * FROM product_categories WHERE fk_product = $productID");
     $query->execute();
@@ -55,7 +113,7 @@ if (isset($_GET['id'])) {
             <?php
             foreach ($results as $result) {
             ?>    
-            <div class="input-field">
+                <div class="input-field">
                     <label class="w-100 p-1" for="title">Title</label>
                     <input id="title" name="title" type="text" value="<?php echo $result->title; ?>"
                         class="validate w-75 p-2" required="" aria-required="true">
@@ -88,48 +146,65 @@ if (isset($_GET['id'])) {
                 <?php
                 }
                 ?>
+                <!--CATEGORIES -->
                 <div class="input-field">
                     <label class="w-100 p-1" for="">Categories</label>
-                    <?php foreach ($getCat as $getCat) {
-                        echo "<input type='checkbox' id='" . $getCat['title'] . "' name='category[]'";
-                        if (array_search($getCat['cat_id'], array_column($getProductsCat, 'fk_category')) !== false) {
-                            echo " checked ";
+                    <?php 
+                        $category = new CategoryController;
+                        $result = $category->all();
+                        if ($result) {
+                        foreach ($result as $row) {
+                            echo "<input type='checkbox' id='" . $row['title'] . "' name='category[]'";
+                            if (array_search($row['cat_id'], array_column($getProductsCat, 'fk_category')) !== false) {
+                                echo " checked ";
+                            }
+                            echo "  value='" . $row['cat_id'] . "'>";
+                            echo "<label for='" . $row['title'] . "'>" . $row['title'] . "</label>";
                         }
-                        echo "  value='" . $getCat['cat_id'] . "'>";
-                        echo "<label for='" . $getCat['title'] . "'>" . $getCat['title'] . "</label>";
                     }
                     ?>
                 </div>
+                <!--BRANDS -->
                 <div class="input-field">
                     <label class="w-100 p-1" for="">Brands</label>
-                    <?php foreach ($getBrand as $getBrand) {
-                        echo "<input type='checkbox' id='brand' name='brand[]'";
-                        if (array_search($getBrand['brand_id'], array_column($getProductsBrand, 'fk_brand')) !== false) {
-                            echo " checked ";
+                    <?php 
+                        $brands = new BrandController;
+                        $result = $brands->all();
+                        if ($result) {
+                        foreach ($result as $row) {
+                            echo "<input type='checkbox' id='brand' name='brand[]'";
+                            if (array_search($row['brand_id'], array_column($getProductsBrand, 'fk_brand')) !== false) {
+                                echo " checked ";
+                            }
+                            echo "  value='" . $row['brand_id'] . "'>";
+                            echo "<label for='" . $row['title'] . "'>" . $row['title'] . "</label>";
                         }
-                        echo "  value='" . $getBrand['brand_id'] . "'>";
-                        echo "<label for='" . $getBrand['title'] . "'>" . $getBrand['title'] . "</label>";
                     }
                     ?>
                 </div>
                 <!--RELATED PRODUCTS -->
                 <div class="input-field">
                     <label class="w-100 p-1" for="">Related Products</label>
-                    <?php foreach ($getProducts as $getProducts) {
-                        echo "<input type='checkbox' id='product' name='product[]'";
-                        if (array_search($getProducts['id'], array_column($getProductsRelated, 'fk_product')) !== false) {
-                            echo " checked ";
+                    <?php 
+                        $products = new ProductsController;
+                        $result = $products->all();
+                        if ($result) {
+                        foreach ($result as $row) {
+                            echo "<input type='checkbox' id='product' name='product[]'";
+                            if (array_search($row['id'], array_column($getProductsRelated, 'fk_product')) !== false) {
+                                echo " checked ";
+                            }
+                            echo "  value='" . $row['id'] . "'>";
+                            echo "<img src='../crud/products/img/" . $row['image'] . "' width='120' height='120' alt='images'>";
+                            echo "<label for='" . $row['title'] . "'>" . $row['title'] . "</label>";
                         }
-                        echo "  value='" . $getProducts['id'] . "'>";
-                        echo "<img src='../crud/products/img/" . $getProducts['image'] . "' width='120' height='120' alt='images'>";
-                        echo "<label for='" . $getProducts['title'] . "'>" . $getProducts['title'] . "</label>";
                     }
                     ?>
                 </div>
                 <input type="hidden" name="id" value="<?php echo $productID; ?>">
                 <button class="btn waves-effect waves-light" type="submit" name="submit">Update
                 </button>
-                </form>
+            </form>
         </div>
     </div>
 </div>
