@@ -45,7 +45,7 @@ if ($_GET['cat_id']) {
         ?>
         <div class="product">
             <a class="myLink" href="single-product.php?product=<?php echo $product['id'] ?>">
-                <img class="" src="../crud/products/img/<?= $product['image'] ?>" alt="Card image cap">
+                <img class="" src="../assets/img/<?= $product['image'] ?>" alt="Card image cap">
                 <div class="body">
                     <h5 class="title">
                         <?= $product['title'] ?>

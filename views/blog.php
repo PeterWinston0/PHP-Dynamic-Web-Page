@@ -18,7 +18,7 @@ require_once "../controller/NewsController.php";
 
         <div class="example-1 card">
             <div class="wrapper">
-                <img src="../crud/news/img/<?= $row['image'] ?>" alt="">
+                <img src="../assets/img/<?= $row['image'] ?>" alt="">
                 <div class="date">
                     <span class="day">12</span>
                     <span class="month">Aug</span>

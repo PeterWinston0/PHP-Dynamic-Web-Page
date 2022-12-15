@@ -147,7 +147,7 @@ require "../includes/layout/frontHeader.php";
         ?>
             <div class="product">
                 <a class="myLink" href="single-product.php?product=<?php echo $relatedProduct['id'] ?>">
-                    <img class="" src="../crud/products/img/<?= $relatedProduct['image'] ?>" alt="Card image cap">
+                    <img class="" src="../assets/img/<?= $relatedProduct['image'] ?>" alt="Card image cap">
                     <div class="body">
                         <h5 class="title">
                             <?= $relatedProduct['title'] ?>

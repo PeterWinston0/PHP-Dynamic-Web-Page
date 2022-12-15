@@ -14,6 +14,6 @@ try {
 }
 
 
-define('PRODUCT_IMG_URL', '../crud/products/img/');
+define('PRODUCT_IMG_URL', '../assets/img/');
 
 ?>

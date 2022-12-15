@@ -18,7 +18,7 @@ require_once "../controller/CompanyController.php";
         foreach ($result as $row) {
     ?>
     <div class="arrow arrow-left"><i class="fas fa-chevron-circle-left"></i></div>
-    <img src="../crud/company/img/<?= $row['image'] ?>" alt="">
+    <img src="../assets/img/<?= $row['image'] ?>" alt="">
     <div class="dots">
         <div class="dot">
             <i class="far fa-dot-circle"></i>
@@ -51,7 +51,7 @@ require_once "../controller/CompanyController.php";
                 ?>
                 <a class="myLink" href="single-product.php?product=<?php echo $row['id'] ?>">
                     <div class="carousel-item">
-                        <img src="../crud/products/img/<?= $row['image'] ?>" style="width: 100%"></img>
+                        <img src="../assets/img/<?= $row['image'] ?>" style="width: 100%"></img>
                         <p>
                             <?= $row['title'] ?>
                         </p>
@@ -84,7 +84,7 @@ require_once "../controller/CompanyController.php";
                 <a class="myLink" href="single-product.php?product=<?php echo $row['id'] ?>">
                     <div class="carousel-item">
                         <div class="img-wrap">
-                            <img src="../crud/products/img/<?= $row['image'] ?>" style="width: 100%"></img>
+                            <img src="../assets/img/<?= $row['image'] ?>" style="width: 100%"></img>
                         </div>
                         <p>
                             <?= $row['title'] ?>
@@ -114,7 +114,7 @@ require_once "../controller/CompanyController.php";
         <div>
             <a href="products.php?cat_id=<?= $row['cat_id'] ?>">
                 <figure class="textover">
-                    <img src='../crud/category/img/<?= $row['image'] ?>' alt='images'>
+                    <img src='../assets/img/<?= $row['image'] ?>' alt='images'>
                     <figcaption>
                         <?= $row['title'] ?>
                     </figcaption>
@@ -145,7 +145,7 @@ require_once "../controller/CompanyController.php";
         </div>
         <a class="special-link" href="single-product.php?product=<?php echo $row['id'] ?>">
         <div class="image">
-            <img class="" src="../crud/products/img/<?= $row['image'] ?>" alt="Card image cap">
+            <img class="" src="../assets/img/<?= $row['image'] ?>" alt="Card image cap">
         </div>
         
         <div class="text">
@@ -176,7 +176,7 @@ require_once "../controller/CompanyController.php";
         <div>
             <a href="products.php?cat_id=<?= $row['cat_id'] ?>">
                 <figure class="textover">
-                    <img src='../crud/category/img/<?= $row['image'] ?>' alt='images'>
+                    <img src='../assets/img/<?= $row['image'] ?>' alt='images'>
                     <figcaption>
                         <?= $row['title'] ?>
                     </figcaption>
@@ -202,7 +202,7 @@ require_once "../controller/CompanyController.php";
             ?>
             <div class="about">
                 <div class="image">
-                    <img src="../crud/company/img/<?= $row['image'] ?>" alt="Card image cap">
+                    <img src="../assets/img/<?= $row['image'] ?>" alt="Card image cap">
                 </div>
                 <div class="text">
                     <h2>
@@ -234,7 +234,7 @@ require_once "../controller/CompanyController.php";
 
         <div class="example-1 card">
             <div class="wrapper">
-                <img src="../crud/news/img/<?= $row['image'] ?>" alt="">
+                <img src="../assets/img/<?= $row['image'] ?>" alt="">
                 <div class="date">
                     <span class="day">12</span>
                     <span class="month">Aug</span>

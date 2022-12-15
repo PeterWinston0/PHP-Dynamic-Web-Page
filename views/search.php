@@ -20,7 +20,7 @@ if (isset($_POST['search'])) {
 
         <div class="product">
             <a class="myLink" href="single-product.php?product=<?php echo $row['id'] ?>">
-                <img class="" src="../crud/products/img/<?= $row['image'] ?>" alt="Card image cap">
+                <img class="" src="../assets/img/<?= $row['image'] ?>" alt="Card image cap">
                 <div class="body">
                     <h5 class="title">
                         <?= $row['title'] ?>
