@@ -43,7 +43,7 @@ if (!empty($msg)) {
         <table class="highlight">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <!-- <th>ID</th> -->
                     <th>Username</th>
                     <!-- <th>Password</th> -->
                 </tr>
@@ -55,7 +55,7 @@ if (!empty($msg)) {
                 if ($result) {
                     foreach ($result as $row) {
                         echo "<tr>";
-                        echo "<td>" . $row['id'] . "</td>";
+                        // echo "<td>" . $row['id'] . "</td>";
                         echo "<td>" . $row['user'] . "</td>";
                         //echo "<td>" . $row['pass'] . "</td>";
                         echo "</tr>";

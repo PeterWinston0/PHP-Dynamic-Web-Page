@@ -1,7 +1,7 @@
 <?php
 session_start();
 $title = "Products Page";
-require_once('../config.php');
+require_once('../includes/config.php');
 require_once('../includes/helpers.php');
 
 $dbCon = dbCon($user, $pass);

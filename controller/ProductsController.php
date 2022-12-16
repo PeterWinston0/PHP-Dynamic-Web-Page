@@ -19,17 +19,6 @@ class ProductsController
         }
     }
 
-    public function index()
-    {
-        $productsQuery = "SELECT * FROM product ORDER BY productID ASC LIMIT 12";
-        $result = $this->conn->query($productsQuery);
-        if($result->num_rows > 0){
-            return $result; 
-        }else{
-            return false;
-        }
-    }
-
     public function latestProduct()
     {
         $productsQuery = "SELECT * FROM latest_products";

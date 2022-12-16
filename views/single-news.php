@@ -1,7 +1,7 @@
 <?php
 session_start();
 $title = "Products Page";
-require_once('../config.php');
+require_once('../includes/config.php');
 require "../includes/layout/frontHeader.php";
 
 $news_id = (int) $_GET['id'];

@@ -1,3 +1,7 @@
+<?php 
+    require_once "../controller/CompanyController.php";
+?>
+
 <div class="newsletter">
     <div class="newsletter-wrap">
     <p>Subscribe to out newsletter to follow up on the latest trends and out newest products</p>

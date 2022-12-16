@@ -1,7 +1,7 @@
 <?php
 session_start();
 $title = "Checkout Page";
-require_once('../config.php');
+require_once('../includes/config.php');
 require_once('../includes/helpers.php');
 
 $dbCon = dbCon($user, $pass);
@@ -16,7 +16,6 @@ $_SESSION['order_number'] = $orderNumber;
 $thanks_items = $_SESSION['cart_items'];
 //changing
 $_SESSION['thanks_items'] = $thanks_items;
-
 
 $cartItemCount = count($_SESSION['cart_items']);
 
@@ -279,7 +278,6 @@ require "../includes/layout/frontHeader.php";
           $itemCounter += $item['qty'];
       ?>
 
-
             <li class="order-summary">
                 <div>
                     <img src="<?php echo $imgUrl; ?>" class="rounded img-thumbnail mr-2" style="">
@@ -309,7 +307,6 @@ require "../includes/layout/frontHeader.php";
                 </strong>
             </div>
             <?php } ?>
-
         </div>
     </div>
 </div>

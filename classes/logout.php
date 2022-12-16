@@ -15,7 +15,9 @@ class Logout
 
     // 3. Destroy the session cookie
     if(isset($_COOKIE[session_name()])) {
-        setcookie(session_name(), '', time()-42000, '/');
+        setcookie(session_name(), '', time()+3600, '/');
+        //FOREVER COOKIE
+        // setcookie(session_name(), '', time()-42000, '/');
     }
 
     // 4. Destroy the session

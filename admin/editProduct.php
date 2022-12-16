@@ -6,7 +6,6 @@ require_once "../controller/CategoryController.php";
 
 
 if (isset($_POST['id']) && isset($_POST['submit'])) {
-    echo "sdklcs";
     $title = $_POST['title'];
     $description = $_POST['description'];
     $price = $_POST['price'];
