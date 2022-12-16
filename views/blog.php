@@ -2,9 +2,7 @@
 session_start();
 $title = "Home Page";
 require "../includes/layout/frontHeader.php";
-
 require_once "../controller/NewsController.php";
-
 ?>
 <div class="page-container">
 <h2 class="block-title">News</h2>
@@ -43,5 +41,4 @@ require_once "../controller/NewsController.php";
         ?>
     </div>
 </div>
-
 <?php require "../includes/layout/frontFooter.php"; ?>

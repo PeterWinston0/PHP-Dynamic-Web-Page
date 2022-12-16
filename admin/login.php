@@ -27,9 +27,7 @@ if (isset($_POST['submit'])) { // Form has been submitted.
         background: #222D32;
         font-family: 'Roboto', sans-serif;
     }
-
     /*LOGIN*/
-
     .login-box {
         margin-top: 75px;
         height: auto;

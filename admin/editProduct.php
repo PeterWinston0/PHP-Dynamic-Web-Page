@@ -1,5 +1,5 @@
 <?php 
-require_once "../db/dbcon.php";
+require_once "../includes/config.php";
 require_once "../controller/ProductsController.php";
 require_once "../controller/BrandController.php";
 require_once "../controller/CategoryController.php";
@@ -16,7 +16,7 @@ if (isset($_POST['id']) && isset($_POST['submit'])) {
     $dbCon = dbCon($user, $pass);
 
     //UPDATE IMAGE
-    move_uploaded_file($_FILES["imagename"]["tmp_name"], "../../crud/products/img/" . $_FILES["imagename"]["name"]);
+    move_uploaded_file($_FILES["imagename"]["tmp_name"], "../assets/img/" . $_FILES["imagename"]["name"]);
          
     $sql = "UPDATE product SET `image` = :product_image WHERE id = :product_id";
     $query = $dbCon->prepare($sql);
@@ -77,23 +77,23 @@ if (isset($_GET['id'])) {
     $productID = $_GET['id'];
 
     $dbCon = dbCon($user, $pass);
-    $query = $dbCon->prepare("SELECT * FROM product WHERE id = $productID");
+    $query = $dbCon->prepare("SELECT * FROM product WHERE productID = $productID");
     $query->execute();
     $getProd = $query->fetchAll();
 
-    $query = $dbCon->prepare("SELECT * FROM product_categories WHERE fk_product = $productID");
+    $query = $dbCon->prepare("SELECT * FROM product_categories WHERE productID = $productID");
     $query->execute();
     $getProductsCat = $query->fetchAll(PDO::FETCH_ASSOC);
 
-    $query = $dbCon->prepare("SELECT * FROM product_brands WHERE fk_product = $productID");
+    $query = $dbCon->prepare("SELECT * FROM product_brands WHERE productID = $productID");
     $query->execute();
     $getProductsBrand = $query->fetchAll(PDO::FETCH_ASSOC);
 
-    $query = $dbCon->prepare("SELECT * FROM product_related WHERE product_id = $productID");
+    $query = $dbCon->prepare("SELECT * FROM product_related WHERE productID = $productID");
     $query->execute();
     $getProductsRelated = $query->fetchAll(PDO::FETCH_ASSOC);
 
-    $sql = "SELECT * FROM product WHERE id = :product_id";
+    $sql = "SELECT * FROM product WHERE productID = :product_id";
     $query = $dbCon->prepare($sql);
     $query->bindParam(':product_id', $imgid, PDO::PARAM_STR);
     $query->execute();
@@ -109,7 +109,7 @@ if (isset($_GET['id'])) {
             <h3>Editing product
                 <!-- <?php// echo $result->title; ?> -->
             </h3>
-            <form class="" name="myProduct" method="post" enctype="multipart/form-data" action="../crud/products/updateProduct.php">
+            <form class="" name="myProduct" method="post" enctype="multipart/form-data">
             <?php
             foreach ($results as $result) {
             ?>    
@@ -132,7 +132,7 @@ if (isset($_GET['id'])) {
                 <div class="form-group ml-4">
                     <label for="focusedinput" class=" control-label">Current Image </label>
                     <div class="">
-                        <img src="../crud/products/img/<?php echo $result->image; ?>" width="200">
+                        <img src="../assets/img/<?php echo $result->image; ?>" width="200">
                     </div>
                 </div>
 
@@ -155,10 +155,10 @@ if (isset($_GET['id'])) {
                         if ($result) {
                         foreach ($result as $row) {
                             echo "<input type='checkbox' id='" . $row['title'] . "' name='category[]'";
-                            if (array_search($row['cat_id'], array_column($getProductsCat, 'fk_category')) !== false) {
+                            if (array_search($row['catID'], array_column($getProductsCat, 'catID')) !== false) {
                                 echo " checked ";
                             }
-                            echo "  value='" . $row['cat_id'] . "'>";
+                            echo "  value='" . $row['catID'] . "'>";
                             echo "<label for='" . $row['title'] . "'>" . $row['title'] . "</label>";
                         }
                     }
@@ -173,10 +173,10 @@ if (isset($_GET['id'])) {
                         if ($result) {
                         foreach ($result as $row) {
                             echo "<input type='checkbox' id='brand' name='brand[]'";
-                            if (array_search($row['brand_id'], array_column($getProductsBrand, 'fk_brand')) !== false) {
+                            if (array_search($row['brandID'], array_column($getProductsBrand, 'brandID')) !== false) {
                                 echo " checked ";
                             }
-                            echo "  value='" . $row['brand_id'] . "'>";
+                            echo "  value='" . $row['brandID'] . "'>";
                             echo "<label for='" . $row['title'] . "'>" . $row['title'] . "</label>";
                         }
                     }
@@ -191,11 +191,11 @@ if (isset($_GET['id'])) {
                         if ($result) {
                         foreach ($result as $row) {
                             echo "<input type='checkbox' id='product' name='product[]'";
-                            if (array_search($row['id'], array_column($getProductsRelated, 'fk_product')) !== false) {
+                            if (array_search($row['productID'], array_column($getProductsRelated, 'productID')) !== false) {
                                 echo " checked ";
                             }
-                            echo "  value='" . $row['id'] . "'>";
-                            echo "<img src='../crud/products/img/" . $row['image'] . "' width='120' height='120' alt='images'>";
+                            echo "  value='" . $row['productID'] . "'>";
+                            echo "<img src='../assets/img/" . $row['image'] . "' width='120' height='120' alt='images'>";
                             echo "<label for='" . $row['title'] . "'>" . $row['title'] . "</label>";
                         }
                     }

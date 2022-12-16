@@ -1,14 +1,15 @@
 <?php
 session_start();
 $title = "Products Page";
-require_once('../includes/config.php');
+require_once('../config.php');
 require_once('../includes/helpers.php');
 
-$prodID = (int) $_GET['product'];
+$dbCon = dbCon($user, $pass);
 
+$prodID = (int) $_GET['product'];
 if (isset($_GET['product']) && !empty($_GET['product']) && is_numeric($_GET['product'])) {
-    $sql = "SELECT * FROM product WHERE product.id =:productID";
-    $handle = $db->prepare($sql);
+    $sql = "SELECT * FROM product WHERE productID =:productID";
+    $handle = $dbCon->prepare($sql);
     $params = [
         ':productID' => $_GET['product'],
     ];
@@ -33,9 +34,9 @@ if (isset($_POST['add_to_cart'])) {
         $productID = intval($_POST['product_id']);
         $productQty = intval($_POST['product_qty']);
 
-        $sql = "SELECT * FROM product WHERE product.id =:productID";
+        $sql = "SELECT * FROM product WHERE productID =:productID";
 
-        $prepare = $db->prepare($sql);
+        $prepare = $dbCon->prepare($sql);
 
         $params = [
             ':productID' => $productID,
@@ -79,7 +80,7 @@ if (isset($_POST['add_to_cart'])) {
     }
 }
 
-$query = $db->prepare("SELECT * FROM product, product_related WHERE fk_product = product.id AND product_id = $prodID");
+$query = $dbCon->prepare("SELECT * FROM product, product_related WHERE product_related.productID = product.productID AND productRelatedID = $prodID");
 $query->execute();
 $getRelatedProducts = $query->fetchAll();
 
@@ -122,7 +123,7 @@ require "../includes/layout/frontHeader.php";
                         </p>
                         <input type="number" name="product_qty" id="productQty" class="form-control"
                             placeholder="Quantity" min="1" max="5" oninput="validity.valid||(value='');" value="1">
-                        <input type="hidden" name="product_id" value="<?php echo $getProductData['id'] ?>">
+                        <input type="hidden" name="product_id" value="<?php echo $getProductData['productID'] ?>">
                     </div>
                     <div class="form-group mb-2 ml-2">
                         <button type="submit" class="add-btn" name="add_to_cart" value="add to cart">Add to
@@ -146,7 +147,7 @@ require "../includes/layout/frontHeader.php";
         foreach ($getRelatedProducts as $relatedProduct) {
         ?>
             <div class="product">
-                <a class="myLink" href="single-product.php?product=<?php echo $relatedProduct['id'] ?>">
+                <a class="myLink" href="single-product.php?product=<?php echo $relatedProduct['productID'] ?>">
                     <img class="" src="../assets/img/<?= $relatedProduct['image'] ?>" alt="Card image cap">
                     <div class="body">
                         <h5 class="title">

@@ -1,8 +1,10 @@
 <?php
 session_start();
 $title = "Checkout Page";
-require_once('../includes/config.php');
+require_once('../config.php');
 require_once('../includes/helpers.php');
+
+$dbCon = dbCon($user, $pass);
 
 //ordernumber generation
 $today = date("Ymd");
@@ -36,7 +38,7 @@ if (isset($_POST['submit'])) {
       $orderNumber = $today . $rand;
 
       $sql = 'INSERT INTO ORDERS (first_name, last_name, email, address, address2, zipcode, order_status,created_at, updated_at, order_no) values (:fname, :lname, :email, :address, :address2, :zipcode, :order_status,:created_at, :updated_at, :order_no)';
-      $statement = $db->prepare($sql);
+      $statement = $dbCon->prepare($sql);
       $params = [
         'fname' => $firstName,
         'lname' => $lastName,
@@ -53,11 +55,11 @@ if (isset($_POST['submit'])) {
       $statement->execute($params);
       if ($statement->rowCount() == 1) {
 
-        $getOrderID = $db->lastInsertId();
+        $getOrderID = $dbCon->lastInsertId();
 
         if (isset($_SESSION['cart_items']) || !empty($_SESSION['cart_items'])) {
-          $sqlDetails = 'INSERT IGNORE INTO order_details (order_id, product_id, product_name, product_price, qty, total_price) values(:order_id, :product_id, :product_name, :product_price, :qty, :total_price)';
-          $orderDetailStmt = $db->prepare($sqlDetails);
+          $sqlDetails = 'INSERT IGNORE INTO order_details (order_id, productID, product_name, product_price, qty, total_price) values(:order_id, :product_id, :product_name, :product_price, :qty, :total_price)';
+          $orderDetailStmt = $dbCon->prepare($sqlDetails);
 
           $totalPriceOrder = 0;
           foreach ($_SESSION['cart_items'] as $item) {
@@ -80,7 +82,7 @@ if (isset($_POST['submit'])) {
 
           $updateSql = 'UPDATE orders SET total_price = :total WHERE o_id = :id';
 
-          $rs = $db->prepare($updateSql);
+          $rs = $dbCon->prepare($updateSql);
           $prepareUpdate = [
             'total' => $totalPriceOrder,
             'id' => $getOrderID

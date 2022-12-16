@@ -2,7 +2,6 @@
 session_start();
 $title = "Home Page";
 require "../includes/layout/frontHeader.php";
-
 require_once "../controller/NewsController.php";
 require_once "../controller/ProductsController.php";
 require_once "../controller/BrandController.php";
@@ -49,7 +48,7 @@ require_once "../controller/CompanyController.php";
                 if ($result) {
                     foreach ($result as $row) {
                 ?>
-                <a class="myLink" href="single-product.php?product=<?php echo $row['id'] ?>">
+                <a class="myLink" href="single-product.php?product=<?php echo $row['productID'] ?>">
                     <div class="carousel-item">
                         <img src="../assets/img/<?= $row['image'] ?>" style="width: 100%"></img>
                         <p>
@@ -77,11 +76,11 @@ require_once "../controller/CompanyController.php";
             <div class="product-carousel car2">
                 <?php
                 $products = new ProductsController;
-                $result = $products->index();
+                $result = $products->cheapProduct();
                 if ($result) {
                     foreach ($result as $row) {
                 ?>
-                <a class="myLink" href="single-product.php?product=<?php echo $row['id'] ?>">
+                <a class="myLink" href="single-product.php?product=<?php echo $row['productID'] ?>">
                     <div class="carousel-item">
                         <div class="img-wrap">
                             <img src="../assets/img/<?= $row['image'] ?>" style="width: 100%"></img>
@@ -112,7 +111,7 @@ require_once "../controller/CompanyController.php";
             foreach ($result as $row) {
         ?>
         <div>
-            <a href="products.php?cat_id=<?= $row['cat_id'] ?>">
+            <a href="products.php?cat_id=<?= $row['catID'] ?>">
                 <figure class="textover">
                     <img src='../assets/img/<?= $row['image'] ?>' alt='images'>
                     <figcaption>
@@ -143,7 +142,7 @@ require_once "../controller/CompanyController.php";
                 repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto
                 fuga praesentium optio, eaque rerum!</p>
         </div>
-        <a class="special-link" href="single-product.php?product=<?php echo $row['id'] ?>">
+        <a class="special-link" href="single-product.php?product=<?php echo $row['productID'] ?>">
         <div class="image">
             <img class="" src="../assets/img/<?= $row['image'] ?>" alt="Card image cap">
         </div>
@@ -174,7 +173,7 @@ require_once "../controller/CompanyController.php";
             foreach ($result as $row) {
         ?>
         <div>
-            <a href="products.php?cat_id=<?= $row['cat_id'] ?>">
+            <a href="products.php?cat_id=<?= $row['catID'] ?>">
                 <figure class="textover">
                     <img src='../assets/img/<?= $row['image'] ?>' alt='images'>
                     <figcaption>
@@ -264,5 +263,4 @@ require_once "../controller/CompanyController.php";
 </div>
 
 <script type="text/javascript" src="../assets/js/main.js"></script>
-
 <?php require("../includes/layout/frontFooter.php") ?>

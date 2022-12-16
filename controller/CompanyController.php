@@ -41,4 +41,26 @@ class CompanyController
             return false;
         }
     }
+
+    public function storeHours()
+    {
+        $companyQuery = "SELECT * FROM company_hours";
+        $result = $this->conn->query($companyQuery);
+        if ($result->num_rows > 0) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function allUsers()
+    {
+        $companyQuery = "SELECT * FROM users";
+        $result = $this->conn->query($companyQuery);
+        if ($result->num_rows > 0) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
 }

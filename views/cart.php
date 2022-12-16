@@ -1,10 +1,7 @@
 <?php
 session_start();
 $title = "Cart Page";
-
-require_once('../includes/config.php');
 require_once('../includes/helpers.php');
-
 require_once "../controller/ProductsController.php";
 //pre($_SESSION);
 
@@ -95,9 +92,7 @@ require "../includes/layout/frontHeader.php";
                                 <?php echo $total; ?>
                             </td>
                         </tr>
-                        <?php }
-
-                        ?>
+                        <?php }?>
                         <tr class="cart-info">
                             <td><button class="clear-btn" id="emptyCart">Clear Cart</button></td>
                             <td></td>
@@ -142,7 +137,7 @@ require "../includes/layout/frontHeader.php";
                 if ($result) {
                     foreach ($result as $row) {
                 ?>
-                <a class="myLink" href="single-product.php?product=<?php echo $row['id'] ?>">
+                <a class="myLink" href="single-product.php?product=<?php echo $row['productID'] ?>">
                     <div class="carousel-item">
                         <img src="../assets/img/<?= $row['image'] ?>" style="width: 100%"></img>
                         <p>

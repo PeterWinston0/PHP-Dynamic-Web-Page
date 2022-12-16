@@ -1,14 +1,16 @@
 <?php
-$user = "peter";
-$pass = "1234";
+$user = "root";
+$pass = "";
 
 function dbCon($user, $pass)
 {
     try {
-        $dbCon = new PDO('mysql:host=localhost;dbname=webshop;charset=utf8', $user, $pass);
+        $dbCon = new PDO('mysql:host=localhost;dbname=mywebshop;charset=utf8', $user, $pass);
         //$dbCon = null;
         return $dbCon;
     } catch (PDOException $err) {
         echo "Error!: " . $err->getMessage() . "<br/>";
         die();
-    }}
+    }
+
+}

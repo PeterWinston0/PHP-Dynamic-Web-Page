@@ -2,24 +2,25 @@
 session_start();
 $title = "Products Page";
 require "../includes/layout/frontHeader.php";
-require_once("../db/dbcon.php");
+require_once('../config.php');
+require_once('../includes/helpers.php');
 
 $dbCon = dbCon($user, $pass);
 if ($_GET['cat_id']) {
     $cat_id = (int) $_GET['cat_id'];
 
-    $query = $dbCon->prepare("SELECT * FROM product, product_categories WHERE fk_product = product.id AND fk_category = $cat_id");
+    $query = $dbCon->prepare("SELECT * FROM product, product_categories WHERE product_categories.productID = product.productID AND catID = $cat_id");
     $query->execute();
     $getAllProducts = $query->fetchAll();
 
-    $query = $dbCon->prepare("SELECT * FROM category WHERE cat_id = $cat_id");
+    $query = $dbCon->prepare("SELECT * FROM category WHERE catID = $cat_id");
     $query->execute();
     $getAllCat = $query->fetchAll();
 
 } else if ($_GET['brand_id']) {
     $brand_id = (int) $_GET['brand_id'];
 
-    $query = $dbCon->prepare("SELECT * FROM product, product_brands WHERE fk_product = product.id AND fk_brand = $brand_id");
+    $query = $dbCon->prepare("SELECT * FROM product, product_brands WHERE product_brands.productID = product.productID AND brandID = $brand_id");
     $query->execute();
     $getAllProducts = $query->fetchAll();
 
@@ -44,7 +45,7 @@ if ($_GET['cat_id']) {
         foreach ($getAllProducts as $product) {
         ?>
         <div class="product">
-            <a class="myLink" href="single-product.php?product=<?php echo $product['id'] ?>">
+            <a class="myLink" href="single-product.php?product=<?php echo $product['productID'] ?>">
                 <img class="" src="../assets/img/<?= $product['image'] ?>" alt="Card image cap">
                 <div class="body">
                     <h5 class="title">

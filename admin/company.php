@@ -1,5 +1,5 @@
 <?php
-require_once "../db/dbcon.php";
+require_once "../includes/config.php";
 require_once "../controller/CompanyController.php";
 require "../includes/layout/backHeader.php";
 
@@ -80,7 +80,7 @@ if (isset($_POST['com_id']) && isset($_POST['submit'])) {
 
                         $upSucces = 'status added';
                     } else {
-                        move_uploaded_file($_FILES["imagename"]["tmp_name"], "../crud/company/img/" . $_FILES["imagename"]["name"]);
+                        move_uploaded_file($_FILES["imagename"]["tmp_name"], "../assets/img/" . $_FILES["imagename"]["name"]);
 
                         $sql = "UPDATE company SET `title` = :com_title, `description` = :com_description, `email` = :com_email, `phone` = :com_phone, `image` = :com_image WHERE id = :com_id";
                         $query = $dbCon->prepare($sql);
@@ -167,7 +167,7 @@ if (isset($_GET['com_id'])) {
                     <div class="form-group ml-4">
                         <label for="focusedinput" class=" control-label">Current Image </label>
                         <div class="">
-                            <img src="../crud/company/img/<?php echo $result->image; ?>" width="200">
+                            <img src="../assets/img/<?php echo $result->image; ?>" width="200">
                         </div>
                     </div>
                     <div class="form-group ml-4">
@@ -206,7 +206,7 @@ if (isset($_GET['com_id'])) {
     if ($result) {
         foreach ($result as $row) {
             echo "<tr>";
-            echo "<td>" . "<img src='../crud/company/img/" . $row['image'] . "' width='120' height='120' alt='images'>" . "</td>";
+            echo "<td>" . "<img src='../assets/img/" . $row['image'] . "' width='120' height='120' alt='images'>" . "</td>";
             echo "<td>" . $row['text'] . "</td>";
             echo "<td>" . $row['no_order'] . "</td>";
 

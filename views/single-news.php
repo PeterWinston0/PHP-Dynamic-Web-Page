@@ -1,12 +1,13 @@
 <?php
 session_start();
 $title = "Products Page";
+require_once('../config.php');
 require "../includes/layout/frontHeader.php";
-require_once("../db/dbcon.php");
 
 $news_id = (int) $_GET['id'];
 
 $dbCon = dbCon($user, $pass);
+
 $query = $dbCon->prepare("SELECT * FROM news WHERE id = $news_id");
 $query->execute();
 $getNews = $query->fetchAll();

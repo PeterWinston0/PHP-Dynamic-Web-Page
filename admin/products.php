@@ -1,5 +1,5 @@
 <?php
-require_once "../db/dbcon.php";
+require_once "../includes/config.php";
 require_once "../controller/ProductsController.php";
 require_once "../controller/BrandController.php";
 require_once "../controller/CategoryController.php";
@@ -79,12 +79,12 @@ if (isset($_POST['submit'])) {
                         if ($_FILES['file']['error'] > 0) {
                             echo "error code: " . $_FILES['file']['error'];
                         } else {
-                            if (file_exists("../crud/products/img/" . $_FILES['file']['name'])) {
+                            if (file_exists("../assets/img/" . $_FILES['file']['name'])) {
                                 echo "You already have that file!";
                             } else if ($width > "2000" || $height > "1200") {
                                 $imageErr = "Error : image size must smaller than 2000 x 1200 pixels.";
                             } else {
-                                move_uploaded_file($_FILES['file']['tmp_name'], "../crud/products/img/" . $_FILES['file']['name']);
+                                move_uploaded_file($_FILES['file']['tmp_name'], "../assets/img/" . $_FILES['file']['name']);
                                 $myFile = $_FILES['file']['name'];
                                 $dbCon = dbCon($user, $pass);
                                 $query = $dbCon->prepare("INSERT INTO product(`title`, `description`, `price`, `image`) VALUES ('$title', '$description', '$price','$myFile')");
@@ -128,11 +128,10 @@ if (isset($_POST['submit'])) {
     }
 }
 
-
 if (isset($_GET['delete'])) {
     $productID = $_GET['delete'];
     $dbCon = dbCon($user, $pass);
-    $query = $dbCon->prepare("DELETE FROM product WHERE id=$productID");
+    $query = $dbCon->prepare("DELETE FROM product WHERE productID = $productID");
     $query->execute();
 
     //header("Location: ../../admin/products.php?status=deleted&id=$productID");
@@ -194,7 +193,7 @@ if (isset($_GET['delete'])) {
                             $result = $category->all();
                             if ($result) {
                                 foreach ($result as $row) {
-                                    echo "<input class='' type='checkbox' id='" . $row['title'] . "' name='category[]' value='" . $row['cat_id'] . "'>";
+                                    echo "<input class='' type='checkbox' id='" . $row['title'] . "' name='category[]' value='" . $row['catID'] . "'>";
                                     echo "<label class='p-1' for='" . $row['title'] . "'>" . $row['title'] . "</label>";
                                 }
                             }
@@ -208,7 +207,7 @@ if (isset($_GET['delete'])) {
                             $result = $brands->all();
                             if ($result) {
                                 foreach ($result as $row) {
-                                    echo "<input type='checkbox' id='" . $row['title'] . "' name='brand[]' value='" . $row['brand_id'] . "'>";
+                                    echo "<input type='checkbox' id='" . $row['title'] . "' name='brand[]' value='" . $row['brandID'] . "'>";
                                     echo "<label class='p-1' for='" . $row['title'] . "'>" . $row['title'] . "</label>";
                                 }
                             }
@@ -222,8 +221,8 @@ if (isset($_GET['delete'])) {
                             $result = $products->all();
                             if ($result) {
                                 foreach ($result as $row) {
-                                    echo "<input type='checkbox' id='" . $row['title'] . "' name='product[]' value='" . $row['id'] . "'>";
-                                    echo "<img src='../crud/products/img/" . $row['image'] . "' width='120' height='120' alt='images'>";
+                                    echo "<input type='checkbox' id='" . $row['title'] . "' name='product[]' value='" . $row['productID'] . "'>";
+                                    echo "<img src='../assets/img/" . $row['image'] . "' width='120' height='120' alt='images'>";
                                     echo "<label class='p-1' for='" . $row['title'] . "'>" . $row['title'] . "</label>";
                                 }
                             }
@@ -261,12 +260,12 @@ if (isset($_GET['delete'])) {
                                 echo "<td>" . $row['title'] . "</td>";
                                 echo "<td>" . $row['description'] . "</td>";
                                 echo "<td>" . $row['price'] . "</td>";
-                                echo "<td>" . "<img src='../crud/products/img/" . $row['image'] . "' width='120' height='120' alt='images'>" . "</td>";
+                                echo "<td>" . "<img src='../assets/img/" . $row['image'] . "' width='120' height='120' alt='images'>" . "</td>";
                                 echo "<td>";
 
                                 echo "</td>";
-                                echo '<td><a href="editProduct.php?id=' . $row['id'] . '" class="waves-effect waves-light btn" ">Edit</a></td>';
-                                echo '<td><a href="products.php?delete=' . $row['id'] . '" class="waves-effect waves-light btn red" onclick="return confirm(\'Delete! are you sure?\')">Delete</a></td>';
+                                echo '<td><a href="editProduct.php?id=' . $row['productID'] . '" class="waves-effect waves-light btn" ">Edit</a></td>';
+                                echo '<td><a href="products.php?delete=' . $row['productID'] . '" class="waves-effect waves-light btn red" onclick="return confirm(\'Delete! are you sure?\')">Delete</a></td>';
                                 echo "</tr>";
                             }
                         }

@@ -1,7 +1,7 @@
 <?php
 session_start();
 $title = "Thank You / Invoice";
-require_once('../includes/config.php');
+require_once('../config.php');
 require_once('../includes/helpers.php');
 
 if (!isset($_SESSION['confirm_order']) || empty($_SESSION['confirm_order'])) {

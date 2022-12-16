@@ -1,12 +1,3 @@
-<?php
-require_once("../db/dbcon.php");
-
-$dbCon = dbCon($user, $pass);
-$query = $dbCon->prepare("SELECT * FROM company_hours");
-$query->execute();
-$getComHours = $query->fetchAll();
-?>
-
 <div class="newsletter">
     <div class="newsletter-wrap">
     <p>Subscribe to out newsletter to follow up on the latest trends and out newest products</p>
@@ -24,18 +15,22 @@ $getComHours = $query->fetchAll();
             <h4>Chase Your Dreams</h4>
         </div>
         <div class="hours">
-            <?php
-        foreach ($getComHours as $hours) {
+        <?php
+                $hours = new CompanyController;
+                $result = $hours->storeHours();
+                if ($result) {
+            foreach ($result as $row) {
         ?>
             <div class="">
                 <div class="">
                     <p>
-                        <?php echo $hours['day'] ?>
-                        <?php echo $hours['time'] ?>
+                        <?php echo $row['day'] ?>
+                        <?php echo $row['time'] ?>
                     </p>
                 </div>
             </div>
             <?php
+            }
         }
         ?>
         </div>

@@ -1,6 +1,5 @@
 <?php
 $title = "Contact Page";
-
 require_once('../includes/helpers.php');
 require "../classes/captcha.php";
 require "../includes/layout/frontHeader.php";

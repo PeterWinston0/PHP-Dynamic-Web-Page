@@ -1,15 +1,13 @@
 <?php
-require_once "../db/dbcon.php";
+require_once "../includes/config.php";
 require_once "../includes/layout/backHeader.php";
 
-$imgid = intval($_GET['id']);
-
 //SAVE EDIT DATA
-if (isset($_POST['id']) && isset($_POST['submit'])) {
+if (isset($_POST['news_id']) && isset($_POST['submit'])) {
+
     $dbCon = dbCon($user, $pass);
 
-    $newsID = $_POST['id'];
-
+    $newsID = $_POST['news_id'];
     $title = $_POST['title'];
     $content = $_POST['content'];
     $news_image = $_FILES["imagename"]["name"];
@@ -24,11 +22,11 @@ if (isset($_POST['id']) && isset($_POST['submit'])) {
         $query->bindParam(':content', $content, PDO::PARAM_STR);
         $query->execute();
 
-        header("Location: ../../admin/brand.php?status=updated&id=$newsID");
+        //header("Location: news.php?status=updated&id=$newsID");
 
     } else {
 
-        move_uploaded_file($_FILES["imagename"]["tmp_name"], "../../img/" . $_FILES["imagename"]["name"]);
+        move_uploaded_file($_FILES["imagename"]["tmp_name"], "../assets/img/" . $_FILES["imagename"]["name"]);
 
         $sql = "UPDATE news SET `title` = :title, `content` = :content, `image` = :news_image WHERE id = :news_id";
         $query = $dbCon->prepare($sql);
@@ -38,14 +36,14 @@ if (isset($_POST['id']) && isset($_POST['submit'])) {
         $query->bindParam(':news_image', $news_image, PDO::PARAM_STR);
         $query->execute();
 
-        //header("Location: ../../admin/brand.php?status=updated&id=$brandID");
+        //header("Location: news.php?status=updated&id=$newsID");
     }
     //header("Location: ../../admin/news.php?status=updated&id=$newsID");
 }else{
     //header("Location: ../../admin/news.php?status=0");
 }
 
-
+$imgid = intval($_GET['id']);
 //LOAD EDIT DATA
 if (isset($_GET['id'])) {
     $newsID = $_GET['id'];
@@ -66,7 +64,7 @@ if (isset($_GET['id'])) {
     <h3>Editing News "
         <?php echo $result->title; ?>"
     </h3>
-    <form class="col s12" name="myNews" method="post" action="updateNews.php">
+    <form class="col s12" name="myNews" enctype="multipart/form-data" method="post">
         <div class="row">
             <div class="input-field col s12">
                 <input id="title" name="title" type="text" value="<?php echo $result->title; ?>" class="validate"
@@ -84,7 +82,7 @@ if (isset($_GET['id'])) {
         <div class="form-group ml-4">
             <label for="focusedinput" class="control-label">Current Image</label>
             <div class="">
-                <img src="../crud/news/img/<?php echo $result->image; ?>" width="200">
+                <img src="../assets/img/<?php echo $result->image; ?>" width="200">
             </div>
         </div>
 
@@ -97,14 +95,14 @@ if (isset($_GET['id'])) {
         <?php
     }
             ?>
-        <input type="hidden" name="id" value="<?php echo $newsID; ?>">
+        <input type="hidden" name="news_id" value="<?php echo $newsID; ?>">
         <button class="btn waves-effect waves-light" type="submit" name="submit">Update
         </button>
     </form>
 </div>
 
 <?php } else {
-    //header("Location: ../../admin/news.php?status=0");
+    header("Location: news.php?status=0");
 } ?>
 
 <?php require "../includes/layout/backFooter.php"; ?>

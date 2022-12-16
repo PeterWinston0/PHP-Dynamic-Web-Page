@@ -1,9 +1,8 @@
 <?php
-require '../includes/config.php';
+require_once('../config.php');
 require "../includes/layout/frontHeader.php";
 if (isset($_POST['search'])) {
 ?>
-
 <div class="page-container">
     <div class="page-title">
         <h1>Search Results</h1>
@@ -15,9 +14,6 @@ if (isset($_POST['search'])) {
     $query->execute();
     while ($row = $query->fetch()) {
             ?>
-
-        <!-- <?php echo $row['title'] ?> -->
-
         <div class="product">
             <a class="myLink" href="single-product.php?product=<?php echo $row['id'] ?>">
                 <img class="" src="../assets/img/<?= $row['image'] ?>" alt="Card image cap">
@@ -28,14 +24,9 @@ if (isset($_POST['search'])) {
                     <p class="text">
                         DKK <?= $row['price'] ?>,-
                     </p>
-                    <!-- <p class="text">
-                        <?= $row['description'] ?>
-                    </p> -->
                 </div>
             </a>
         </div>
-
-
         <?php
     }
             ?>
@@ -45,9 +36,7 @@ if (isset($_POST['search'])) {
 } else {
 ?>
 <p> Your search didnt find anything </p>
-
 <?php
 }
 ?>
-
 <?php require("../includes/layout/frontFooter.php") ?>

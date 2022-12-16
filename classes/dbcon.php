@@ -2,9 +2,9 @@
 
 class dbCon
 {
-    private $dsn = 'mysql:dbname=webshop;host=localhost;charset=utf8';
-    private $user = "peter";
-    private $pass = "1234";
+    private $dsn = 'mysql:dbname=mywebshop;host=localhost;charset=utf8';
+    private $user = "root";
+    private $pass = "";
     public $dbCon;
     public function __construct()
     {

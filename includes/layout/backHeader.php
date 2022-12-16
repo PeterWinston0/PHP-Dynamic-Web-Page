@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
 spl_autoload_register(
     function ($class) {
@@ -11,6 +9,8 @@ if ($session->confirm_logged_in()) {
     $redirect = new Redirector("login.php");
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">

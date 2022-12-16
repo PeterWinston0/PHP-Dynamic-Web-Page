@@ -1,4 +1,5 @@
-<?php require_once "../db/dbCon.php";
+<?php 
+require_once "../includes/config.php";
 
 $imgid = intval($_GET['car_id']);
 
@@ -10,10 +11,6 @@ if (isset($_POST['car_id']) && isset($_POST['submit'])) {
     $text = $_POST['text'];
     $no_order = $_POST['no_order'];
     $car_image = $_FILES["imagename"]["name"];
-    // var_dump($car_image);
-    // var_dump($carID);
-    // var_dump($text);
-    // var_dump($no_order);
 
     if ($_FILES['imagename']['name'] == '') {
          //No file selected
@@ -29,7 +26,7 @@ if (isset($_POST['car_id']) && isset($_POST['submit'])) {
          
     } else {
 
-         move_uploaded_file($_FILES["imagename"]["tmp_name"], "../../crud/company/img/" . $_FILES["imagename"]["name"]);
+         move_uploaded_file($_FILES["imagename"]["tmp_name"], "../assets/img/" . $_FILES["imagename"]["name"]);
          
          $sql = "UPDATE carousel SET `image` = :car_image, `text` = :car_text, `no_order` = :car_order WHERE id = :car_id";
          $query = $dbCon->prepare($sql);
@@ -70,8 +67,7 @@ if (isset($_GET['car_id'])) {
     <h3>Editing Slides "
         <!-- <?php echo $result->title; ?>" -->
     </h3>
-    <form class="col s12" name="mySlides" enctype="multipart/form-data" method="post"
-        action="../crud/company/updateSlides.php">
+    <form class="col s12" name="mySlides" enctype="multipart/form-data" method="post">
         <div class="row">
             <div class="input-field col s12">
                 <input id="text" name="text" type="text" value="<?php echo $result->text; ?>" class="validate"
@@ -88,7 +84,7 @@ if (isset($_GET['car_id'])) {
         <div class="form-group ml-4">
             <label for="focusedinput" class=" control-label">Current Image </label>
             <div class="">
-                <img src="../crud/company/img/<?php echo $result->image; ?>" width="200">
+                <img src="../assets/img/<?php echo $result->image; ?>" width="200">
             </div>
         </div>
 
@@ -99,7 +95,7 @@ if (isset($_GET['car_id'])) {
             </div>
         </div>
         <?php
-    }
+        }
         ?>
 
         <input type="hidden" name="car_id" value="<?php echo $carID; ?>">

@@ -1,13 +1,10 @@
 <?php
-// spl_autoload_register(
-//     function ($class) {
-//         include "../classes/" . $class . ".php";
-//     }
-// );
-// $session = new SessionHandle();
-// if ($session->confirm_logged_in()) {
-//     $redirect = new Redirector("login.php");
-// }
+require_once "../controller/CompanyController.php";
+spl_autoload_register(
+    function ($class) {
+        include "../classes/" . $class . ".php";
+    }
+);
 // START FORM PROCESSING
 if (isset($_POST['submit'])) { // Form has been submitted.
     $newUser = new NewUser($_POST['user'], $_POST['pass']);
@@ -39,5 +36,34 @@ if (!empty($msg)) {
         <button class="btn btn-dark" type="submit" name="submit">Create User</button>
     </form>
 </div>
+<hr>
+
+<div class="row" style="margin-left: 50px;">
+    <div class="row">
+        <table class="highlight">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <!-- <th>Password</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $orders = new CompanyController;
+                $result = $orders->allUsers();
+                if ($result) {
+                    foreach ($result as $row) {
+                        echo "<tr>";
+                        echo "<td>" . $row['id'] . "</td>";
+                        echo "<td>" . $row['user'] . "</td>";
+                        //echo "<td>" . $row['pass'] . "</td>";
+                        echo "</tr>";
+                    }
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
 
 <?php require "../includes/layout/backFooter.php"; ?>

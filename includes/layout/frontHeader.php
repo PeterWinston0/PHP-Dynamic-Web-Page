@@ -58,7 +58,7 @@ require_once "../controller/CategoryController.php";
             if ($result) {
                 foreach ($result as $row) {
             ?>
-            <li><a class="nav-link" href="products.php?cat_id=<?= $row['cat_id'] ?>">
+            <li><a class="nav-link" href="products.php?cat_id=<?= $row['catID'] ?>">
                     <?= $row['title'] ?>
                 </a></li>
             <?php
@@ -91,7 +91,7 @@ require_once "../controller/CategoryController.php";
         if ($result) {
             foreach ($result as $row) {
         ?>
-        <li><a class="nav-link" href="products.php?cat_id=<?= $row['cat_id'] ?>">
+        <li><a class="nav-link" href="products.php?cat_id=<?= $row['catID'] ?>">
                 <?= $row['title'] ?>
             </a></li>
         <?php

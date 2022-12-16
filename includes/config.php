@@ -1,19 +1,34 @@
 <?php
 
-// THIS WORKS AND IS THE CONNECTION 
-$dsn = 'mysql:dbname=webshop;host=localhost;charset=utf8';
-$user = 'peter';
-$pass = '1234';
+$user = "root";
+$pass = "";
 
-try {
-	$db = new PDO($dsn, $user, $pass);
-	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $err) {
-	echo "PDO Error! " . $err->getMessage() . "<br/>";
-	die();
+function dbCon($user, $pass)
+{
+    try {
+        $dbCon = new PDO('mysql:host=localhost;dbname=mywebshop;charset=utf8', $user, $pass);
+        //$dbCon = null;
+        return $dbCon;
+    } catch (PDOException $err) {
+        echo "Error!: " . $err->getMessage() . "<br/>";
+        die();
+    }
+
 }
 
 
-define('PRODUCT_IMG_URL', '../assets/img/');
+
+// // THIS WORKS AND IS THE CONNECTION 
+// $dsn = 'mysql:dbname=mywebshop;host=localhost;charset=utf8';
+// $user = 'root';
+// $pass = '';
+
+// try {
+// 	$db = new PDO($dsn, $user, $pass);
+// 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// } catch (PDOException $err) {
+// 	echo "PDO Error! " . $err->getMessage() . "<br/>";
+// 	die();
+// }
 
 ?>

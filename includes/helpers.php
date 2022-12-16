@@ -1,5 +1,7 @@
 <?php
 
+define('PRODUCT_IMG_URL', '../assets/img/');
+
 function pre($array){
     echo "<pre>";
     print_r($array);

@@ -1,5 +1,5 @@
 <?php
-require_once "../DB/dbcon.php";
+require_once "../includes/config.php";
 require_once "../controller/CompanyController.php";
 require "../includes/layout/backHeader.php";
 ?>
@@ -38,6 +38,6 @@ require "../includes/layout/backHeader.php";
             </tbody>
         </table>
     </div>
-</div>
+
 
 <?php require "../includes/layout/backFooter.php"; ?>

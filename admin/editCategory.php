@@ -1,6 +1,5 @@
-<?php require_once "../db/dbCon.php";
-
-$imgid = intval($_GET['cat_id']);
+<?php
+require_once "../includes/config.php"; 
 
 //SAVE EDIT DATA
 if (isset($_POST['cat_id']) && isset($_POST['submit'])) {
@@ -10,45 +9,43 @@ if (isset($_POST['cat_id']) && isset($_POST['submit'])) {
     $catID = $_POST['cat_id'];
     $title = $_POST['title'];
     $cat_image = $_FILES["imagename"]["name"];
-    //var_dump($cat_image);
 
     if ($_FILES['imagename']['name'] == '') {
          //No file selected
-
-         $sql = "UPDATE category SET `title` = :cat_title WHERE cat_id = :cat_id";
+         $sql = "UPDATE category SET `title` = :cat_title WHERE catID = :cat_id";
          $query = $dbCon->prepare($sql);
          $query->bindParam(':cat_id', $catID, PDO::PARAM_STR);
          $query->bindParam(':cat_title', $title, PDO::PARAM_STR);
          $query->execute();
 
-         header("Location: ../../admin/category.php?status=updated&id=$catID");
+         header("Location: category.php?status=updated&id=$catID");
          
     } else {
 
-         move_uploaded_file($_FILES["imagename"]["tmp_name"], "../../crud/category/img/" . $_FILES["imagename"]["name"]);
+         move_uploaded_file($_FILES["imagename"]["tmp_name"], "../assets/img/" . $_FILES["imagename"]["name"]);
          
-         $sql = "UPDATE category SET `title` = :cat_title, `image` = :cat_image WHERE cat_id = :cat_id";
+         $sql = "UPDATE category SET `title` = :cat_title, `image` = :cat_image WHERE catID = :cat_id";
          $query = $dbCon->prepare($sql);
          $query->bindParam(':cat_id', $catID, PDO::PARAM_STR);
          $query->bindParam(':cat_title', $title, PDO::PARAM_STR);
          $query->bindParam(':cat_image', $cat_image, PDO::PARAM_STR);
          $query->execute();
 
-         //header("Location: ../../admin/category.php?status=updated&id=$catID");
+         //header("Location: category.php?status=updated&id=$catID");
     }
 
-    //header("Location: ../../admin/category.php?status=updated&id=$catID");
+    //header("Location: category.php?status=updated&id=$catID");
 
 } else {
-    //header("Location: ../../admin/category.php?status=0");
+    //header("Location: ../..category.php?status=0");
 }
 
+$imgid = intval($_GET['id']);
 //LOAD EDIT DATA
-if (isset($_GET['cat_id'])) {
-
-    $catID = $_GET['cat_id'];
+if (isset($_GET['id'])) {
+    $catID = $_GET['id'];
     $dbCon = dbCon($user, $pass);
-    $sql = "SELECT * FROM category WHERE cat_id = :cat_id";
+    $sql = "SELECT * FROM category WHERE catID = :cat_id";
     $query = $dbCon->prepare($sql);
     $query->bindParam(':cat_id', $imgid, PDO::PARAM_STR);
     $query->execute();
@@ -64,8 +61,7 @@ if (isset($_GET['cat_id'])) {
     <h3>Editing Category "
         <?php echo $result->title; ?>"
     </h3>
-    <form class="col s12" name="myCategory" enctype="multipart/form-data" method="post"
-        action="../crud/category/updateCategory.php">
+    <form class="col s12" name="myCategory" enctype="multipart/form-data" method="post">
         <div class="row">
             <div class="input-field col s12">
                 <input id="title" name="title" type="text" value="<?php echo $result->title; ?>" class="validate"
@@ -77,7 +73,7 @@ if (isset($_GET['cat_id'])) {
         <div class="form-group ml-4">
             <label for="focusedinput" class=" control-label">Current Image </label>
             <div class="">
-                <img src="../crud/category/img/<?php echo $result->image; ?>" width="200">
+                <img src="../assets/img/<?php echo $result->image; ?>" width="200">
             </div>
         </div>
 
@@ -96,10 +92,9 @@ if (isset($_GET['cat_id'])) {
         </button>
     </form>
 </div>
-</div>
 
 <?php } else {
-    header("Location: category.php?status=0");
+    //header("Location: category.php?status=0");
 } ?>
 
 <?php require "../includes/layout/backFooter.php"; ?>

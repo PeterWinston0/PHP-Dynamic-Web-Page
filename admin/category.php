@@ -1,5 +1,5 @@
 <?php
-require_once "../db/dbcon.php";
+require_once "../includes/config.php";
 require "../includes/layout/backHeader.php";
 require_once "../controller/CategoryController.php";
 
@@ -35,12 +35,12 @@ if (isset($_POST['submit'])) {
                 if ($_FILES['file']['error'] > 0) {
                     echo "error code: " . $_FILES['file']['error'];
                 } else {
-                    if (file_exists("../crud/category/img/" . $_FILES['file']['name'])) {
+                    if (file_exists("../assets/img/" . $_FILES['file']['name'])) {
                         echo "no dude, you already have tha file!";
                     } else if ($width > "2000" || $height > "1200") {
                         $imageErr = "Error : image size must smaller than 2000 x 1200 pixels.";
                     } else {
-                        move_uploaded_file($_FILES['file']['tmp_name'], "../crud/category/img/" . $_FILES['file']['name']);
+                        move_uploaded_file($_FILES['file']['tmp_name'], "../assets/img/" . $_FILES['file']['name']);
                         $myFile = $_FILES['file']['name'];
                         $dbCon = dbCon($user, $pass);
                         $query = $dbCon->prepare("INSERT INTO category(`title`, `image`) VALUES ('$title', '$myFile')");
@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 if (isset($_GET['delete'])) {
     $categoryID = $_GET['delete'];
     $dbCon = dbCon($user, $pass);
-    $query = $dbCon->prepare("DELETE FROM category WHERE cat_id = $categoryID");
+    $query = $dbCon->prepare("DELETE FROM category WHERE catID = $categoryID");
     $query->execute();
 
     //header("Location: ../../admin/category.php?status=deleted&id=$categoryID");
@@ -110,11 +110,11 @@ if (isset($_GET['delete'])) {
                         foreach ($result as $row) {
                             echo "<tr>";
                             echo "<td>" . $row['title'] . "</td>";
-                            echo "<td>" . "<img src='../crud/category/img/" . $row['image'] . "' width='120' height='120' alt='images'>" . "</td>";
+                            echo "<td>" . "<img src='../assets/img/" . $row['image'] . "' width='120' height='120' alt='images'>" . "</td>";
                             echo "<td>";
                             echo "</td>";
-                            echo '<td><a href="editCategory.php?cat_id=' . $row['cat_id'] . '" class="waves-effect waves-light btn" ">Edit</a></td>';
-                            echo '<td><a href="category.php?delete=' . $row['cat_id'] . '" class="waves-effect waves-light btn red" onclick="return confirm(\'Delete! are you sure?\')">Delete</a></td>';
+                            echo '<td><a href="editCategory.php?id=' . $row['catID'] . '" class="waves-effect waves-light btn" ">Edit</a></td>';
+                            echo '<td><a href="category.php?delete=' . $row['catID'] . '" class="waves-effect waves-light btn red" onclick="return confirm(\'Delete! are you sure?\')">Delete</a></td>';
                             echo "</tr>";
                         }
                     }
